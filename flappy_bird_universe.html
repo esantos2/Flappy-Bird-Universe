@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Flappy Bird Universe v1.1!</title>
+        <title>Flappy Bird Universe v1.2!</title>
         <style>
             button:hover{
                 background-color: #2b9AAd;
@@ -14,143 +14,216 @@
     <body>
         <center>
             <h1>Flappy Bird Universe</h1>
-            <button id = "start" onclick="startGame();">Start Game!</button>
+            <button id = "start" onclick="chooseCharScreen();">Start Game!</button>
             <canvas id="grid" width="480" height="480"></canvas>
-            <h4>v1.1</h4>
+            <h4>v1.2</h4>
         </center>
         <script>
-            //v1.1: added colors, foreground and background, 
-            //      created separate top and bottom pipes
-            //      added right side collision detection
+            //v1.2: graphics added:
+            //          character, pipes, background and foreground images
+            //      logic updates:
+            //          character selection screen and choice evaluationg prior to game start
+            //          pipe location is saved to a single array instead of two, with heights adjusted for image display
+            //          animation is now from requestAnimationFrame, not setInterval
+            //          increased game speed, physics
+            //          included collision detection for both halves of pipes (previously just right half)
+
+            //graphics
+            var birdPic = new Image();
+            var fishPic = new Image();
+            var catPic = new Image();
+            var marioCapePic = new Image();
+            var angryBirdPic = new Image();
+            var bananyaPic = new Image();
+            var topPipesPic = new Image();
+            var btmPipesPic = new Image();
+            var bgDay = new Image();
+            var fgDay = new Image();
+            birdPic.src = "images/flappyBird.png"; // 51x36
+            fishPic.src = "images/Fish.png"; // 40x40
+            catPic.src = "images/NyanCat.png"; // 68x40
+            marioCapePic.src = "images/marioCape.png"; // 56x56
+            angryBirdPic.src = "images/angryBird.png";  // 50x46
+            bananyaPic.src = "images/Bananya.png"; // 32x55
+            topPipesPic.src = "images/pipesTop2.png"; // 52x480
+            btmPipesPic.src = "images/pipesBtm2.png"; // 52x480
+            bgDay.src = "images/bgDay.png"; // 600x480
+            fgDay.src = "images/fgDay.png"; // 480x60
             
             // Setup game graphic objects
             var c = document.getElementById("grid");
             var ctx = c.getContext('2d');
-            var player = {"x":50, "y":0, "size":10, "v":0};
-            var gapConst = player.size * 10;
+            var player = {"x":50, "y":0, "v":0, "pWidth": 0, "pHeight": 0};
+            var charChoice;
+            var gapConst = 120;
             var fgHeight = 40;
-            var pipeWidth = 25;
-            var btwnPipes = 0;
-            var topPipes = [];
-            var btmPipes = [];
-            var obstacles = [];
-            var gameUpdate;
-            var pipeUpdate;
             var score = 0;
+            var pipeLocation = [];
+            var update;
+            var crash = false;
             c.style.display = "none"; //Makes Game Map invisible
 
-            function startGame(){
-                player.x = 50;
-                player.y = 0;
-                player.size = 10;
-                player.v = 0;
-                btwnPipes = 0;
-                topPipes = [0];
-                btmPipes = [0];
-                obstacles = [0];
-                score = 0;
-                window.addEventListener('keypress',keyHandler);
-                gameUpdate = setInterval(update, 8);
-                pipeUpdate = setInterval(spawnPipe, 2500);
+            function chooseCharScreen(){
+                //remove button, reveal canvas
                 c.style.display = "block";
                 var s = document.getElementById("start");
                 s.style.display = "none";
+                background();
+                //character selection, start game
+                drawBox();
+                ctx.fillStyle = "#000000";
+                ctx.font = "20px Verdana";
+                ctx.fillText("CHOOSE YOUR", 165, 150);
+                ctx.fillText("CHARACTER!", 175, 180);
+                ctx.drawImage(birdPic, 130, 207, 51, 36);
+                ctx.drawImage(fishPic, 217, 203, 40, 40);
+                ctx.drawImage(catPic, 285, 205, 68, 40);
+                ctx.drawImage(angryBirdPic, 126, 285, 45, 41);
+                ctx.drawImage(marioCapePic, 212, 278, 49, 49);
+                ctx.drawImage(bananyaPic, 300, 273, 32, 55);
+                ctx.font = "20px Verdana";
+                ctx.fillText("1          2          3", 145, 262);
+                ctx.fillText("4          5          6", 145, 347);
+                window.addEventListener('keypress',selectChar);
             }
 
-            //Update the game frame
-            function update(){
-                ctx.clearRect(0,0, c.width, c.height);
-                background();
-                foreground();
-                gravity();
-                if (drawEntities())
-                    endGame();
+            function selectChar(e){
+                var code = e.keyCode;
+                if (code == 50){ // '2' key, select fish
+                    player.pWidth = player.pHeight = 40;
+                    charChoice = fishPic;
+                }
+                else if (code == 51){ // '3' key, select nyan cat
+                    player.pWidth = 68;
+                    player.pHeight = 40;
+                    charChoice = catPic;
+                }
+                else if (code == 52){ // '4' key, select angry bird
+                    player.pWidth = 45;
+                    player.pHeight = 41;
+                    charChoice = angryBirdPic;
+                }
+                else if (code == 53){ // '5' key, select cape mario
+                    player.pWidth = player.pHeight = 49;
+                    charChoice = marioCapePic;
+                }
+                else if (code == 54){ // '6' key, select bananya
+                    player.pWidth = 32;
+                    player.pHeight = 55;
+                    charChoice = bananyaPic;
+                }
+                else{ // default is flappy bird
+                    player.pWidth = 51;
+                    player.pHeight = 36;
+                    charChoice = birdPic;
+                }
+                window.removeEventListener('keypress',selectChar);
+                startGame();
+            }
+
+            function startGame(){ //initialize variables
+                player.x = 50;
+                player.y = player.v = score = 0;
+                crash = false;
+                pipeLocation = [0];
+                spawnPipe();
+                window.addEventListener('keypress',keyHandler);
+                window.requestAnimationFrame(drawEntities);
+            }
+            
+            function keyHandler(e){
+                var code = e.keyCode;
+                if(code == 32) //space key, make bird fly/jump
+                    player.v = -2.7;
+                if(code == 114){ // 'r' key, restart the game
+                    window.cancelAnimationFrame(update);
+                    startGame();
+                }
+                if(code == 99){ // 'c' key, select character
+                    window.cancelAnimationFrame(update);
+                    chooseCharScreen();
+                }
             }
 
             function foreground(){
-                ctx.fillStyle = "#ac7339";
-                ctx.fillRect(0, c.height - fgHeight, c.width, fgHeight);
+                ctx.drawImage(fgDay, 0, c.height - fgHeight);
             }
 
             function background(){
-                var gradientBG = ctx.createLinearGradient(0, 0, 0, c.height - fgHeight);
-                gradientBG.addColorStop(0, "white");
-                gradientBG.addColorStop(1, "turquoise");
-                ctx.fillStyle = gradientBG;
-                ctx.fillRect(0,0, c.width, c.height);
+                ctx.drawImage(bgDay, 0, 0);
             }
 
             function gravity(){
-                player.v += 0.02;
+                player.v += 0.07;
                 player.y = Math.min(c.height - 10, Math.max(0, player.y + player.v));
             }
 
             function spawnPipe(){
-                btwnPipes = Math.floor(Math.random() * (c.height - fgHeight - 2 * gapConst) + 0.5*gapConst);
-                topPipes.push({ "topEnd": btwnPipes, "x": c.width});
-                btmPipes.push({ "btmStart": btwnPipes + gapConst, "x": c.width});
+                pipeLocation.push({ "x": c.width, "y": Math.floor(Math.random() * (c.height - fgHeight - 2 * gapConst) + 0.5*gapConst)})
             }
 
-            function drawPlayer(){
-                ctx.fillStyle = "#ffff1a";
-                ctx.fillRect(player.x, player.y, player.size, player.size);
-                ctx.strokeStyle = "#000000";
-                ctx.strokeRect(player.x, player.y, player.size, player.size);
-            }
-
-            function drawEntities(){
-                var crash = false;
-                for(i = 0; i < topPipes.length; i++){
-                    topPipes[i].x -= 1;
-                    btmPipes[i].x -= 1;
-                    ctx.fillStyle = "#00b359";
-                    ctx.fillRect(topPipes[i].x, 0, pipeWidth, topPipes[i].topEnd); //top pipe
-                    ctx.fillRect(btmPipes[i].x, btmPipes[i].btmStart, pipeWidth, c.height - btmPipes[i].btmStart - fgHeight); //bottom pipe
-                    if( (player.x + player.size == topPipes[i].x 
-                            && (player.y <= topPipes[i].topEnd || player.y + player.size >= btmPipes[i].btmStart)) //hit left side
-                        || ((player.x >= topPipes[i].x && player.x + player.size <= topPipes[i].x + pipeWidth) 
-                            && (player.y <= topPipes[i].topEnd || player.y + player.size >= btmPipes[i].btmStart)) //hit inside
-                        || ((player.x <= topPipes[i].x + pipeWidth && player.x + player.size >= topPipes[i].x + pipeWidth)
-                            && (player.y <= topPipes[i].topEnd || player.y + player.size >= btmPipes[i].btmStart)) //hit right side
-                        || (player.y + player.size >= c.height - fgHeight)){ //hit ground
-                        crash = true;
-                        break;
-                    }
-                    if (topPipes[i].x == player.x)
-                        score++; //update score
-                    }
-                ctx.fillStyle = "#000";
-                ctx.font = "20px Verdana";
-                ctx.fillText("Score : "+score, 10, 20); //show score
-                drawPlayer();
-                return crash;
-            }
-
-            function keyHandler(e){
-                var code = e.keyCode;
-                if(code == 32) //space key, make bird fly/jump
-                    player.v = -1.3;
-                if(code == 114){ // 'r' key, restart the game
-                    clearInterval(gameUpdate);
-                    clearInterval(pipeUpdate);
-                    startGame();
-                }
-            }
-
-            function endGame(){ //display game over screen, score, prompt to restart
+            function drawBox(){
                 ctx.clearRect(0,0, c.width, c.height);
                 background();
                 ctx.fillStyle = "#ffffff";
                 ctx.strokeStyle = "#000000";
                 ctx.fillRect(120, 120, 240, 240);
                 ctx.strokeRect(120, 120, 240, 240);
+            }
+
+            function drawPlayer(){
+                ctx.drawImage(charChoice, player.x, player.y, player.pWidth, player.pHeight);
+            }
+
+            function drawEntities(){
+                ctx.clearRect(0,0, c.width, c.height);
+                background();
+                for(var i = 0; i < pipeLocation.length; i++){ //draw pipes
+                    pipeLocation[i].x -= 2; //move pipes left
+                    ctx.drawImage(topPipesPic, pipeLocation[i].x, 0 - (topPipesPic.height - pipeLocation[i].y));
+                    ctx.drawImage(btmPipesPic, pipeLocation[i].x, pipeLocation[i].y + gapConst);
+                    if (pipeLocation[i].x == 160){ 
+                        spawnPipe(); //spawn new pipe
+                    }
+                    //collision detection
+                    if( (player.x + player.pWidth == pipeLocation[i].x 
+                            && (player.y <= pipeLocation[i].y || player.y + player.pHeight >= pipeLocation[i].y + gapConst)) //hit left edge
+                        || ((player.x <= pipeLocation[i].x && player.x + player.pWidth >= pipeLocation[i].x)
+                            && (player.y <= pipeLocation[i].y || player.y + player.pHeight >= pipeLocation[i].y + gapConst)) //hit left half
+                        || ((player.x >= pipeLocation[i].x && player.x + player.pWidth <= pipeLocation[i].x + topPipesPic.width) 
+                            && (player.y <= pipeLocation[i].y || player.y + player.pHeight >= pipeLocation[i].y + gapConst)) //hit inside
+                        || ((player.x <= pipeLocation[i].x + topPipesPic.width && player.x + player.pWidth >= pipeLocation[i].x + topPipesPic.width)
+                            && (player.y <= pipeLocation[i].y || player.y + player.pHeight >= pipeLocation[i].y + gapConst)) //hit right half
+                        || (player.y + player.pHeight >= c.height - fgHeight)){ //hit ground
+                        crash = true;
+                        break;
+                    }
+                    if (pipeLocation[i].x == player.x)
+                        score++; //update score
+                    }
+                foreground();
+                drawPlayer();
+                gravity();
+                ctx.fillStyle = "#000";
+                ctx.font = "20px Verdana";
+                ctx.fillText("Score : "+score, 10, 20); //show score
+                if (crash){
+                    window.cancelAnimationFrame(update);
+                    endGame();
+                }
+                else{
+                    update = window.requestAnimationFrame(drawEntities);
+                }
+            }
+
+            function endGame(){ //display game over screen, score, prompt to restart
+                drawBox();
                 ctx.fillStyle = "#000000";
                 ctx.fillText("GAME OVER", 180, 220);
                 ctx.fillText("SCORE: " + score, 190, 270);
                 ctx.font = "15px Verdana";
-                ctx.fillText("Press 'r' to restart", 174, 320);
-                clearInterval(gameUpdate);
-                clearInterval(pipeUpdate);
+                ctx.fillText("(R) Restart", 195, 320);
+                ctx.fillText("(C) Change character", 160, 340);
             }
         </script>
     </body>
