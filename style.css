@@ -1,12 +1,20 @@
 body{
     background: black;
     color: white;
-    font-family: monospace;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
 }
 button:hover{
     background-color: #2b9AAd;
     color: white;
 }
 canvas{
-    border: 2px solid #666666;
+    /* border: 2px solid #666666;
+    align-items: center; */
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 600px;
 }
