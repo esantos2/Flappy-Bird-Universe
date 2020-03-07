@@ -1,3 +1,8 @@
+body{
+    background: black;
+    color: white;
+    font-family: monospace;
+}
 button:hover{
     background-color: #2b9AAd;
     color: white;
