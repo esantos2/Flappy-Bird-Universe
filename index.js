@@ -74,10 +74,10 @@ function chooseCharScreen(){
     background();
     //character selection, start game
     drawBox();
-    ctx.fillStyle = "#000000";
-    ctx.font = "20px Verdana";
-    ctx.fillText("CHOOSE YOUR", 165, 150);
-    ctx.fillText("CHARACTER!", 175, 180);
+    ctx.fillStyle = "black";
+    ctx.font = "24px Verdana";
+    ctx.fillText("CHOOSE YOUR", 147, 150);
+    ctx.fillText("CHARACTER!", 161, 180);
     ctx.drawImage(birdPic, 130, 207, 51, 36);
     ctx.drawImage(fishPic, 217, 203, 40, 40);
     ctx.drawImage(catPic, 285, 205, 68, 40);
@@ -85,8 +85,8 @@ function chooseCharScreen(){
     ctx.drawImage(marioCapePic, 212, 278, 49, 49);
     ctx.drawImage(bananyaPic, 300, 273, 32, 55);
     ctx.font = "20px Verdana";
-    ctx.fillText("1          2          3", 145, 262);
-    ctx.fillText("4          5          6", 145, 347);
+    ctx.fillText("1          2          3", 150, 262);
+    ctx.fillText("4          5          6", 150, 347);
     window.addEventListener('keypress',selectChar);
 }
 
@@ -162,8 +162,8 @@ function spawnPipe(){
 function drawBox(){
     ctx.clearRect(0,0, c.width, c.height);
     background();
-    ctx.fillStyle = "#ffffff";
-    ctx.strokeStyle = "#000000";
+    ctx.fillStyle = "FloralWhite";
+    ctx.strokeStyle = "pink";
     ctx.fillRect(120, 120, 240, 240);
     ctx.strokeRect(120, 120, 240, 240);
 }
@@ -253,8 +253,8 @@ function drawEntities(){
         newScore = true;
     }
     ctx.fillText("[High score : "+highScore+"]", 10, 40); //show high score
-    ctx.font = "15px Courier";
-    ctx.fillText("FPS : " + fps.getFPS(), 400, 15); //show fps
+    ctx.font = "18px Courier";
+    ctx.fillText("FPS : " + fps.getFPS(), 370, 15); //show fps
     if (crash){
         window.cancelAnimationFrame(update);
         endGame();
