@@ -69,7 +69,7 @@ var fps = {
 function chooseCharScreen(){
     //remove button, reveal canvas
     c.style.display = "block";
-    var s = document.getElementById("start");
+    var s = document.getElementById("startButton");
     s.style.display = "none";
     background();
     //character selection, start game

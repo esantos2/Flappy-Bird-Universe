@@ -2,10 +2,21 @@ body{
     background: black;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* text-align: center; */
+    text-align: center;
 }
-button:hover{
-    background-color: #2b9AAd;
+#startButton {
+    font-size: 20px;
+    width: 120px;
+    font-family: sans-serif;
+    padding: 10px;
+    background: #00ffea;
+    border-radius: 10px;
+    color: #1B1B1D;
+    border: 2px black solid;
+    font-weight: bold;
+}
+#startButton:hover{
+    background-color: rgba(59, 137, 240, 0.664);
     color: white;
 }
 canvas{
@@ -13,8 +24,9 @@ canvas{
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
-    display: block;
     max-width: 480px;
+    display: block;
+    border-radius: 10px;
 }
 .title{
     display: flex;
