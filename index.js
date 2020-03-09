@@ -246,15 +246,15 @@ function drawEntities(){
     gravity();
     ctx.fillStyle = "#000";
     ctx.font = "20px Verdana";
-    ctx.fillText("Score : "+score, 10, 20); //show score
+    ctx.fillText("Score : "+score, 15, 20); //show score
     ctx.font = "14px Verdana";
     if (score > highScore){
         highScore = score;
         newScore = true;
     }
-    ctx.fillText("[High score : "+highScore+"]", 10, 40); //show high score
+    ctx.fillText("[High score : "+highScore+"]", 15, 40); //show high score
     ctx.font = "18px Courier";
-    ctx.fillText("FPS : " + fps.getFPS(), 370, 15); //show fps
+    ctx.fillText("FPS : " + fps.getFPS(), 380, 15); //show fps
     if (crash){
         window.cancelAnimationFrame(update);
         endGame();
