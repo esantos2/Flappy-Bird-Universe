@@ -2,7 +2,7 @@ body{
     background: black;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
+    /* text-align: center; */
 }
 button:hover{
     background-color: #2b9AAd;
@@ -14,4 +14,10 @@ canvas{
     margin-left: auto;
     margin-right: auto;
     display: block;
+    max-width: 480px;
+}
+.title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

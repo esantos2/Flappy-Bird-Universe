@@ -32,7 +32,7 @@ bgDay.src = "images/bgDay.png"; // 600x480
 fgDay.src = "images/fgDay.png"; // 480x60
 
 // Setup game graphic objects
-var c = document.getElementById("grid");
+var c = document.getElementById("canvas");
 var ctx = c.getContext('2d');
 var player = {"x":50, "y":0, "v":0, "pWidth": 0, "pHeight": 0};
 var charChoice;
