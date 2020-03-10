@@ -266,13 +266,13 @@ function drawEntities(){
 function endGame(){ //display game over screen, score, prompt to restart
     drawBox();
     ctx.fillStyle = "#000000";
-    ctx.font = "30px Arial";
+    ctx.font = "bold 30px Arial";
     ctx.fillText("GAME OVER", 150, 200);
     ctx.font = "20px Verdana";
     ctx.fillText("Score: " + score, 195, 250);
     ctx.font = "17px Verdana";
     if (newScore){ //show high score
-        ctx.fillText("(NEW) High score : "+highScore, 150, 270);
+        ctx.fillText("[NEW] High score : "+highScore, 150, 270);
     } else{
         ctx.fillText("High score : "+highScore, 177, 270);
     }
