@@ -1,4 +1,4 @@
-# Flappy-Bird-Universe
+# Flappy Bird Universe
 Browser implementation of the classic Flappy Bird mobile game, with additional characters and features
 
 * New characters available
@@ -13,6 +13,6 @@ Browser implementation of the classic Flappy Bird mobile game, with additional c
 ---
 ## Coming soon
 
-- Unique features/effects for each character
-- Click to select characters
+- Unique background and physics for each character
+- Background music and effects
 - Touch integration
