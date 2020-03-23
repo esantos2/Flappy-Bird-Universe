@@ -130,7 +130,7 @@ function startGame(){ //initialize variables
 function keyHandler(e){
     var code = e.keyCode;
     if(code == 32){ //space key, make bird fly/jump
-        player.v = -2.7;
+        player.v = -4.6; //og: -2.7
     }
     if(code == 114){ // 'r' key, restart the game
         window.cancelAnimationFrame(update);
@@ -151,7 +151,7 @@ function background(){
 }
 
 function gravity(){
-    player.v += 0.07;
+    player.v += 0.17; //og: 0.07
     player.y = Math.min(c.height - 10, Math.max(0, player.y + player.v));
 }
 
@@ -219,7 +219,7 @@ function drawEntities(){
         pipeLocation[i].x -= 2; //move pipes left
         ctx.drawImage(topPipesPic, pipeLocation[i].x, 0 - (topPipesPic.height - pipeLocation[i].y));
         ctx.drawImage(btmPipesPic, pipeLocation[i].x, pipeLocation[i].y + gapConst);
-        if (pipeLocation[i].x == 160){ 
+        if (pipeLocation[i].x == 260){ //og: 160
             spawnPipe(); //spawn new pipe
         }
         //collision detection
