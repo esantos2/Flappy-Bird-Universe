@@ -7,6 +7,13 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+.mainScreen{
+    position: relative;
+    height: 480px;
+    width: 480px;
+}
+
 #startButton {
     font-size: 20px;
     width: 120px;
@@ -16,16 +23,23 @@ body {
     border-radius: 10px;
     color: black;
     font-weight: bold;
+    position: relative;
+    bottom: 240px;
 }
+
 #startButton:hover{
     background-color: rgba(59, 137, 240, 0.664);
     color: white;
 }
+
 canvas{
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
+    height: 100%;
+    width: 100%;
     max-width: 480px;
     border-radius: 10px;
+    display: block;
 }

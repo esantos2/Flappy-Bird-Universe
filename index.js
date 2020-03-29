@@ -47,7 +47,7 @@ var pipeLocation = [];
 var update;
 var crash = false;
 var newScore = false;
-c.style.display = "none"; //Makes Game Map invisible
+// c.style.display = "none"; //Makes Game Map invisible
 
 //fps counter
 var fps = {
@@ -68,7 +68,7 @@ var fps = {
 
 function chooseCharScreen(){
     //remove button, reveal canvas
-    c.style.display = "block";
+    // c.style.display = "block";
     var s = document.getElementById("startButton");
     s.style.display = "none";
     background();
