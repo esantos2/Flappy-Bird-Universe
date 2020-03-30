@@ -1,12 +1,15 @@
 <html>
     <head>
         <title>Flappy Bird Universe</title>
-        <link type="text/css" rel="stylesheet" href="style.css">
+        <link href="style.css" type="text/css" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" rel="stylesheet">
     </head>
+    
+    <header>
+        <h1 class="title">Flappy Bird Universe</h1>
+    </header>
+    
     <body>
-        <div class="title" >
-            <h1>Flappy Bird Universe</h1>
-        </div>
         <div class="mainScreen">
             <canvas id="canvas" width="480" height="480"></canvas>
             <script>
@@ -20,5 +23,12 @@
             <button id="startButton" onclick="chooseCharScreen();">Start</button>
         </div>
         <script type="text/javascript" src="index.js"></script>
+
     </body>
+    
+    <footer class="icons">
+        <span id="linkedin"><i class="fab fa-linkedin"></i></span>
+        <span id="github"><i class="fab fa-github"></i></span>
+        <span id="email"><i class="fas fa-envelope"></i></span>
+    </footer>
 </html>

@@ -19,17 +19,19 @@ body {
     width: 120px;
     font-family: sans-serif;
     padding: 10px;
-    background: #00ffea;
+    background: #ffffff;
     border-radius: 10px;
     color: black;
     font-weight: bold;
     position: relative;
-    bottom: 240px;
+    bottom: 250px;
+    box-shadow: 5px 10px 18px #888888;
 }
 
 #startButton:hover{
-    background-color: rgba(59, 137, 240, 0.664);
+    background-color: rgb(59, 137, 240);
     color: white;
+    cursor: pointer;
 }
 
 canvas{
@@ -42,4 +44,14 @@ canvas{
     max-width: 480px;
     border-radius: 10px;
     display: block;
+}
+
+.icons{
+    display: flex;
+    margin: 10px;
+    font-size: 25px;
+}
+
+.icons span{
+    margin: 10px;
 }
