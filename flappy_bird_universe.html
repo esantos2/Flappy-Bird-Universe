@@ -12,14 +12,6 @@
     <body>
         <div class="mainScreen">
             <canvas id="canvas" width="480" height="480"></canvas>
-            <script>
-                window.onload = function() {
-                    var ctx = document.getElementById("canvas").getContext("2d")
-                    var bgDay = new Image();
-                    bgDay.src = "images/bgDay.png"; // 600x480
-                    ctx.drawImage(bgDay, 0, 0);
-                }
-            </script>
             <button id="startButton" onclick="chooseCharScreen();">Start</button>
         </div>
         <script type="text/javascript" src="index.js"></script>

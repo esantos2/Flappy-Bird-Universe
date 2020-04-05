@@ -1,34 +1,23 @@
-//v1.3: Animation update
-//          rainbow trail for nyan cat
-//          jetpack trail for bananya jumps
-//      logic updates
-//          added high score counter
-//          added fps counter, may not be permanent
-//          created setPlayer to initialize selected character values
-//          created storeLastPosition to save history of previous coordinates for trails
-//          removed redundant code in collision detection (left edge)
-
-
-//graphics
+//images
 var birdPic = new Image();
-var fishPic = new Image();
-var catPic = new Image();
-var marioCapePic = new Image();
-var angryBirdPic = new Image();
-var bananyaPic = new Image();
-var topPipesPic = new Image();
-var btmPipesPic = new Image();
-var bgDay = new Image();
-var fgDay = new Image();
 birdPic.src = "images/flappyBird.png"; // 51x36
+var fishPic = new Image();
 fishPic.src = "images/Fish.png"; // 40x40
+var catPic = new Image();
 catPic.src = "images/NyanCat.png"; // 65x40
+var marioCapePic = new Image();
 marioCapePic.src = "images/marioCape.png"; // 56x56
+var angryBirdPic = new Image();
 angryBirdPic.src = "images/angryBird.png";  // 50x46
+var bananyaPic = new Image();
 bananyaPic.src = "images/Bananya.png"; // 32x55
+var topPipesPic = new Image();
 topPipesPic.src = "images/pipesTop2.png"; // 52x480
+var btmPipesPic = new Image();
 btmPipesPic.src = "images/pipesBtm2.png"; // 52x480
+var bgDay = new Image();
 bgDay.src = "images/bgDay.png"; // 600x480
+var fgDay = new Image();
 fgDay.src = "images/fgDay.png"; // 480x60
 
 // Setup game graphic objects
@@ -48,6 +37,16 @@ var update;
 var crash = false;
 var newScore = false;
 // c.style.display = "none"; //Makes Game Map invisible
+
+//scrolling background
+window.onload = function(){
+    var scrollSpeed = 10;
+    const bgScroll = function (){
+        ctx.drawImage(bgDay, 0, 0);
+        
+    }
+    bgScroll();
+}
 
 //fps counter
 var fps = {
