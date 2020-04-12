@@ -47,11 +47,18 @@ canvas{
 }
 
 .icons{
+    position: relative;
     display: flex;
-    margin: 10px;
-    font-size: 25px;
+    justify-content: space-around;
+    width: 200px;
+    margin: 20px;
+    font-size: 35px;
 }
 
-.icons span{
-    margin: 10px;
+.icons a{
+    color: rgb(29, 196, 101);
+}
+
+.icons a:hover{
+    color: rgb(161, 255, 161);
 }
