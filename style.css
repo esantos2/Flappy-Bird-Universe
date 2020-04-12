@@ -8,6 +8,10 @@ body {
     align-items: center;
 }
 
+.title{
+    font-family: "Press Start 2P";
+}
+
 .mainScreen{
     position: relative;
     height: 480px;
