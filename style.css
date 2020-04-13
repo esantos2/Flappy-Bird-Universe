@@ -66,3 +66,15 @@ canvas{
 .icons a:hover{
     color: rgb(161, 255, 161);
 }
+
+.charButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+}
+
+.charButton:hover{
+    cursor: pointer;
+}

@@ -70,8 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     function chooseCharScreen(){
-        //remove button, reveal canvas
-        // c.style.display = "block";
+        //remove start button
         let s = document.getElementById("startButton");
         s.style.display = "none";
         background();
@@ -81,6 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.font = "24px Verdana";
         ctx.fillText("CHOOSE YOUR", 147, 150);
         ctx.fillText("CHARACTER!", 161, 180);
+
+        //add buttons for character selection
+        let charButton = document.createElement("button");
+        let buttonImg = document.createElement("img");
+        buttonImg.src = "images/flappyBird.png";
+        charButton.appendChild(buttonImg);
+        charButton.setAttribute("class", "charButton");
+        document.body.appendChild(charButton);
+
+
         ctx.drawImage(birdPic, 130, 207, 51, 36);
         ctx.drawImage(fishPic, 217, 203, 40, 40);
         ctx.drawImage(catPic, 285, 205, 68, 40);
