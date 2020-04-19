@@ -1,4 +1,6 @@
 //images
+let charLinks = ["images/flappyBird.png", "images/Fish.png", "images/NyanCat.png",
+                 "images/angryBird.png", "images/marioCape.png", "images/Bananya.png"];
 let birdPic = new Image();
 birdPic.src = "images/flappyBird.png"; // 51x36
 let fishPic = new Image();
@@ -19,6 +21,8 @@ let bgDay = new Image();
 bgDay.src = "images/bgDay.png"; // 600x480
 let fgDay = new Image();
 fgDay.src = "images/fgDay.png"; // 480x60
+let characterImages = [birdPic, fishPic, catPic, angryBirdPic, marioCapePic, bananyaPic];
+let characterDimensions = [[51,36], [40,40], [65,40], [50,46], [56,56], [32,55]];
 
 // Setup game graphic objects
 document.addEventListener("DOMContentLoaded", () => {
@@ -82,14 +86,32 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.fillText("CHARACTER!", 161, 180);
 
         //add buttons for character selection
-        let charButton = document.createElement("button");
-        let buttonImg = document.createElement("img");
-        buttonImg.src = "images/flappyBird.png";
-        charButton.appendChild(buttonImg);
-        charButton.setAttribute("class", "charButton");
-        document.body.appendChild(charButton);
+        let charSelection = document.createElement("div");
+        charSelection.setAttribute("class", "charSelection");
+        document.body.appendChild(charSelection);
+        charLinks.forEach( (link, idx) => {
+            let charImg = document.createElement("img");
+            charImg.src = link;
+            charButton.appendChild(buttonImg);
+            charButton.setAttribute("class", "charButtons");
+            charButton.setAttribute("id", `${idx}`);
+            charButton.addEventListener("click", selectChar);
+            charSelection.appendChild(charButton);
+        });
+        //character selected
+        function selectChar(e){
+            e.preventDefault();
+            console.log("selected!");
+            let idx = parseInt(e.target.id);
+            console.log(e.target);
+            setPlayer(characterImages[idx], characterDimensions[idx][0], characterDimensions[idx][1]);
+            window.removeEventListener('submit',selectChar);
+            document.body.removeChild(charSelection);
+            startGame();
+        }
 
-
+        /* 
+        //Draw characters on canvas, select via keyboard
         ctx.drawImage(birdPic, 130, 207, 51, 36);
         ctx.drawImage(fishPic, 217, 203, 40, 40);
         ctx.drawImage(catPic, 285, 205, 68, 40);
@@ -100,26 +122,27 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.fillText("1          2          3", 150, 262);
         ctx.fillText("4          5          6", 150, 347);
         window.addEventListener('keypress',selectChar);
+        function selectChar(e){
+            let code = e.keyCode;
+            if (code == 50){ // '2' key, select fish
+                setPlayer(fishPic, 40, 40);
+            } else if (code == 51){ // '3' key, select nyancat
+                setPlayer(catPic, 65, 40);
+            } else if (code == 52){ // '4' key, select angry bird
+                setPlayer(angryBirdPic, 45, 41);
+            } else if (code == 53){ // '5' key, select cape mario
+                setPlayer(marioCapePic, 49, 49);
+            } else if (code == 54){ // '6' key, select bananya
+                setPlayer(bananyaPic, 32, 55);
+            } else{ // default is flappy bird
+                setPlayer(birdPic, 51, 36);
+            }
+            window.removeEventListener('keypress',selectChar);
+            startGame();
+        }
+        */
     }
 
-    function selectChar(e){
-        let code = e.keyCode;
-        if (code == 50){ // '2' key, select fish
-            setPlayer(fishPic, 40, 40);
-        } else if (code == 51){ // '3' key, select nyancat
-            setPlayer(catPic, 65, 40);
-        } else if (code == 52){ // '4' key, select angry bird
-            setPlayer(angryBirdPic, 45, 41);
-        } else if (code == 53){ // '5' key, select cape mario
-            setPlayer(marioCapePic, 49, 49);
-        } else if (code == 54){ // '6' key, select bananya
-            setPlayer(bananyaPic, 32, 55);
-        } else{ // default is flappy bird
-            setPlayer(birdPic, 51, 36);
-        }
-        window.removeEventListener('keypress',selectChar);
-        startGame();
-    }
 
     function setPlayer(pic, w, h){
         charChoice = pic;
