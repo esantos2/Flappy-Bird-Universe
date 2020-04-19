@@ -78,12 +78,13 @@ document.addEventListener("DOMContentLoaded", () => {
         let s = document.getElementById("startButton");
         s.style.display = "none";
         background();
+        
         //character selection, start game
         drawBox();
-        ctx.fillStyle = "black";
-        ctx.font = "24px Verdana";
-        ctx.fillText("CHOOSE YOUR", 147, 150);
-        ctx.fillText("CHARACTER!", 161, 180);
+        let selectionTitle = document.createElement("h2");
+        selectionTitle.setAttribute("class", "selectionTitle");
+        selectionTitle.innerHTML = "Choose your character!";
+        document.body.appendChild(selectionTitle);
 
         //add buttons for character selection
         let charSelection = document.createElement("div");
@@ -92,12 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
         charLinks.forEach( (link, idx) => {
             let charImg = document.createElement("img");
             charImg.src = link;
-            charButton.appendChild(buttonImg);
-            charButton.setAttribute("class", "charButtons");
-            charButton.setAttribute("id", `${idx}`);
-            charButton.addEventListener("click", selectChar);
-            charSelection.appendChild(charButton);
+            charImg.setAttribute("id", `${idx}`);
+            charImg.addEventListener("click", selectChar);
+            charSelection.appendChild(charImg);
         });
+
         //character selected
         function selectChar(e){
             e.preventDefault();
@@ -107,40 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
             setPlayer(characterImages[idx], characterDimensions[idx][0], characterDimensions[idx][1]);
             window.removeEventListener('submit',selectChar);
             document.body.removeChild(charSelection);
+            document.body.removeChild(selectionTitle);
+            removeBox();
             startGame();
         }
-
-        /* 
-        //Draw characters on canvas, select via keyboard
-        ctx.drawImage(birdPic, 130, 207, 51, 36);
-        ctx.drawImage(fishPic, 217, 203, 40, 40);
-        ctx.drawImage(catPic, 285, 205, 68, 40);
-        ctx.drawImage(angryBirdPic, 126, 285, 45, 41);
-        ctx.drawImage(marioCapePic, 212, 278, 49, 49);
-        ctx.drawImage(bananyaPic, 300, 273, 32, 55);
-        ctx.font = "20px Verdana";
-        ctx.fillText("1          2          3", 150, 262);
-        ctx.fillText("4          5          6", 150, 347);
-        window.addEventListener('keypress',selectChar);
-        function selectChar(e){
-            let code = e.keyCode;
-            if (code == 50){ // '2' key, select fish
-                setPlayer(fishPic, 40, 40);
-            } else if (code == 51){ // '3' key, select nyancat
-                setPlayer(catPic, 65, 40);
-            } else if (code == 52){ // '4' key, select angry bird
-                setPlayer(angryBirdPic, 45, 41);
-            } else if (code == 53){ // '5' key, select cape mario
-                setPlayer(marioCapePic, 49, 49);
-            } else if (code == 54){ // '6' key, select bananya
-                setPlayer(bananyaPic, 32, 55);
-            } else{ // default is flappy bird
-                setPlayer(birdPic, 51, 36);
-            }
-            window.removeEventListener('keypress',selectChar);
-            startGame();
-        }
-        */
     }
 
 
@@ -195,12 +165,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function drawBox(){
-        ctx.clearRect(0,0, c.width, c.height);
-        background();
-        ctx.fillStyle = "FloralWhite";
-        ctx.strokeStyle = "pink";
-        ctx.fillRect(120, 120, 240, 240);
-        ctx.strokeRect(120, 120, 240, 240);
+        let backBox = document.createElement("div");
+        backBox.setAttribute("id", "backBox");
+        document.body.appendChild(backBox);
+    }
+
+    function removeBox(){
+        let backBox = document.getElementById("backBox");
+        document.body.removeChild(backBox);
     }
 
     function storeLastPosition(xPos, yPos){
@@ -314,6 +286,10 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.font = "15px Verdana";
         ctx.fillText("(R) Restart", 195, 320);
         ctx.fillText("(C) Change character", 160, 340);
+
+        //make box via css
+        // removeBox();
+
     }
 
 })
