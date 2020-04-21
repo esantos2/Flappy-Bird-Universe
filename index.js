@@ -101,9 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //character selected
         function selectChar(e){
             e.preventDefault();
-            console.log("selected!");
             let idx = parseInt(e.target.id);
-            console.log(e.target);
             setPlayer(characterImages[idx], characterDimensions[idx][0], characterDimensions[idx][1]);
             window.removeEventListener('submit',selectChar);
             document.body.removeChild(charSelection);
@@ -136,14 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let code = e.keyCode;
         if(code == 32){ //space key, make bird fly/jump
             player.v = -4.6; //og: -2.7
-        }
-        if(code == 114){ // 'r' key, restart the game
-            window.cancelAnimationFrame(update);
-            startGame();
-        }
-        if(code == 99){ // 'c' key, select character
-            window.cancelAnimationFrame(update);
-            chooseCharScreen();
         }
     }
 
@@ -271,25 +261,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function endGame(){ //display game over screen, score, prompt to restart
+        //draw background
+        background();
         drawBox();
-        ctx.fillStyle = "#000000";
-        ctx.font = "bold 30px Arial";
-        ctx.fillText("GAME OVER", 150, 200);
-        ctx.font = "20px Verdana";
-        ctx.fillText("Score: " + score, 195, 250);
-        ctx.font = "17px Verdana";
-        if (newScore){ //show high score
-            ctx.fillText("[NEW] High score : "+highScore, 150, 270);
-        } else{
-            ctx.fillText("High score : "+highScore, 177, 270);
+
+        //display text
+        let endText = document.createElement("div");
+        endText.setAttribute("class", "selectionTitle endScreen");
+        let endTitle = document.createElement("h2");
+        endTitle.innerHTML = "GAME OVER";
+        let endScore = document.createElement("div");
+        endScore.innerHTML = `Score: ${score}`;
+        let endHighScore = document.createElement("div");
+        endHighScore.innerHTML = newScore ? `[NEW] High: ${highScore}` : `High: ${highScore}`;
+        document.body.appendChild(endText).appendChild(endTitle);
+        endText.appendChild(endScore);
+        endText.appendChild(endHighScore);
+
+        const restartGame = function(e){
+            window.cancelAnimationFrame(update);
+            removeBox();
+            document.body.removeChild(endText);
+            document.body.removeChild(endButtons);
+            e.target.id === "start" ? startGame() : chooseCharScreen();
         }
-        ctx.font = "15px Verdana";
-        ctx.fillText("(R) Restart", 195, 320);
-        ctx.fillText("(C) Change character", 160, 340);
 
-        //make box via css
-        // removeBox();
-
+        //display restart options
+        let endButtons = document.createElement("div");
+        endButtons.setAttribute("class", "endButtons")
+        let restart = document.createElement("div");
+        restart.setAttribute("class", "endButton");
+        restart.setAttribute("id", "start");
+        restart.addEventListener("click", restartGame);
+        restart.innerHTML = "Restart";
+        let changeChar = document.createElement("div");
+        changeChar.setAttribute("class", "endButton");
+        changeChar.setAttribute("id", "charSelect");
+        changeChar.addEventListener("click", restartGame);
+        changeChar.innerHTML = "Change character";
+        document.body.appendChild(endButtons).appendChild(restart)
+        endButtons.appendChild(changeChar);
     }
 
 })
