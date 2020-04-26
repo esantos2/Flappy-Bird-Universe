@@ -241,6 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         drawPlayer();
         gravity();
+
+        //display score in corner
+        
         ctx.fillStyle = "#000";
         ctx.font = "20px Verdana";
         ctx.fillText("Score : "+score, 15, 20); //show score
@@ -273,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let endScore = document.createElement("div");
         endScore.innerHTML = `Score: ${score}`;
         let endHighScore = document.createElement("div");
-        endHighScore.innerHTML = newScore ? `[NEW] High: ${highScore}` : `High: ${highScore}`;
+        endHighScore.innerHTML = newScore ? `[NEW] Best: ${highScore}` : `Best: ${highScore}`;
         document.body.appendChild(endText).appendChild(endTitle);
         endText.appendChild(endScore);
         endText.appendChild(endHighScore);
