@@ -42,6 +42,25 @@ document.addEventListener("DOMContentLoaded", () => {
     let crash = false;
     let newScore = false;
     // c.style.display = "none"; //Makes Game Map invisible
+    
+    //current score, hidden at start
+    let currentScore = document.createElement("div");
+    currentScore.setAttribute("class", "no-score");
+    document.body.appendChild(currentScore);
+
+    //toggle score display
+    const toggleScoreDisplay = () => {
+        if (currentScore.getAttribute("class") === "no-score"){
+            currentScore.setAttribute("class", "show-score");
+        } else{
+            currentScore.setAttribute("class", "no-score");
+        }
+    }
+
+    //update score
+    const updateScore = () => {
+        currentScore.innerHTML = score;
+    }
 
     //scrolling background
     window.onload = function(){
@@ -126,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pipeLocation = [0];
         pastPosition = [0];
         spawnPipe();
+        toggleScoreDisplay();
         window.addEventListener('keypress',keyHandler);
         window.requestAnimationFrame(drawEntities);
     }
@@ -230,6 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if (pipeLocation[i].x == player.x)
                 score++; //update score
+                updateScore();
             }
         foreground();
         if (charChoice == catPic){
@@ -242,19 +263,15 @@ document.addEventListener("DOMContentLoaded", () => {
         drawPlayer();
         gravity();
 
-        //display score in corner
-        
-        ctx.fillStyle = "#000";
-        ctx.font = "20px Verdana";
-        ctx.fillText("Score : "+score, 15, 20); //show score
-        ctx.font = "14px Verdana";
+        //display score
         if (score > highScore){
             highScore = score;
             newScore = true;
         }
-        ctx.fillText("[High score : "+highScore+"]", 15, 40); //show high score
-        ctx.font = "18px Courier";
-        ctx.fillText("FPS : " + fps.getFPS(), 380, 15); //show fps
+
+        // ctx.fillText("FPS : " + fps.getFPS(), 380, 15); //show fps
+
+        //update game frame
         if (crash){
             window.cancelAnimationFrame(update);
             endGame();
@@ -265,6 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function endGame(){ //display game over screen, score, prompt to restart
         //draw background
+        toggleScoreDisplay();
         background();
         drawBox();
 

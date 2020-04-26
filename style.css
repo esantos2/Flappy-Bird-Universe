@@ -28,7 +28,7 @@ body {
     background: rgb(122, 255, 166);
     border-radius: 10px;
     color: black;
-    border: 5px solid black;
+    border: 3px solid rgb(0, 0, 0);
     font-weight: bold;
     position: relative;
     bottom: 250px;
@@ -154,4 +154,18 @@ canvas{
     color: maroon;
     cursor: pointer;
 
+}
+
+.show-score{
+    display: block;
+    position: absolute;
+    top: 150px;
+    font-family: "Press Start 2P";
+    font-size: 30px;
+    text-align: center;
+    text-shadow: 2px 2px 2px rgb(71, 71, 71);
+}
+
+.no-score{
+    display: none;
 }
