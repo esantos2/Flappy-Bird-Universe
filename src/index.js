@@ -1,26 +1,26 @@
 //images
-let charLinks = ["images/flappyBird.png", "images/Fish.png", "images/NyanCat.png",
-                 "images/angryBird.png", "images/marioCape.png", "images/Bananya.png"];
+let charLinks = ["assets/images/flappyBird.png", "assets/images/Fish.png", "assets/images/NyanCat.png",
+                 "assets/images/angryBird.png", "assets/images/marioCape.png", "assets/images/Bananya.png"];
 let birdPic = new Image();
-birdPic.src = "images/flappyBird.png"; // 51x36
+birdPic.src = "assets/images/flappyBird.png"; // 51x36
 let fishPic = new Image();
-fishPic.src = "images/Fish.png"; // 40x40
+fishPic.src = "assets/images/Fish.png"; // 40x40
 let catPic = new Image();
-catPic.src = "images/NyanCat.png"; // 65x40
+catPic.src = "assets/images/NyanCat.png"; // 65x40
 let marioCapePic = new Image();
-marioCapePic.src = "images/marioCape.png"; // 56x56
+marioCapePic.src = "assets/images/marioCape.png"; // 56x56
 let angryBirdPic = new Image();
-angryBirdPic.src = "images/angryBird.png";  // 50x46
+angryBirdPic.src = "assets/images/angryBird.png";  // 50x46
 let bananyaPic = new Image();
-bananyaPic.src = "images/Bananya.png"; // 32x55
+bananyaPic.src = "assets/images/Bananya.png"; // 32x55
 let topPipesPic = new Image();
-topPipesPic.src = "images/pipesTop2.png"; // 52x480
+topPipesPic.src = "assets/images/pipesTop2.png"; // 52x480
 let btmPipesPic = new Image();
-btmPipesPic.src = "images/pipesBtm2.png"; // 52x480
+btmPipesPic.src = "assets/images/pipesBtm2.png"; // 52x480
 let bgDay = new Image();
-bgDay.src = "images/bgDay.png"; // 600x480
+bgDay.src = "assets/images/bgDay.png"; // 600x480
 let fgDay = new Image();
-fgDay.src = "images/fgDay.png"; // 480x60
+fgDay.src = "assets/images/fgDay.png"; // 480x60
 let characterImages = [birdPic, fishPic, catPic, angryBirdPic, marioCapePic, bananyaPic];
 let characterDimensions = [[51,36], [40,40], [65,40], [50,46], [56,56], [32,55]];
 
