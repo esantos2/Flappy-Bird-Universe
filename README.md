@@ -1,7 +1,7 @@
 # Flappy Bird Universe
 Browser implementation of the classic Flappy Bird mobile game, with additional characters and features.
 
-[Live Demo](https://arctive.github.io/Flappy-Bird-Universe/)
+<a href="https://arctive.github.io/Flappy-Bird-Universe/" target="_blank">Live Demo</a>
 
 ## Technologies
 * HTML5 / CSS3 / JS
@@ -9,58 +9,46 @@ Browser implementation of the classic Flappy Bird mobile game, with additional c
 ## Features
 * Choose from a selection of characters with unique physics attributes.
 <p align="center">
-  <img max-width="600px" height="auto" src="">
+  <img max-width="600px" height="auto" src="assets\gifs\char_select2.gif">
 </p>
 
 * Pipe obstacles generate at random heights over time.
-<p align="center">
-  <img max-width="600px" height="auto" src="">
-</p>
-
 * Score counter tracks your current and previous high score.
 <p align="center">
-  <img max-width="600px" height="auto" src="">
+  <img max-width="600px" height="auto" src="assets\gifs\demo_play2.gif">
 </p>
 
 
 ## Challenges
 
-* Collision detection
+* Pipes are generated with consistent spacing between each other horizontally and veritcally, with the gaps appearing at random heights. This was
+  created by saving the most recent pipes into an array and deleting ones that the player has passed. Locations are updated and 
+  pipes are redrawn with every animation frame, allowing the obstacles to approach smoothly and consistently.
 
 ```
-
-    for (let i = startIdx; i <= endIdx; i++) {
-
-        if (bases.includes(this.mainSeq[i])){ //filter missing data points
-
-            baseCounts[this.mainSeq[i]]++;
-
-            ctx.fillStyle = baseColor[this.mainSeq[i]];
-
-        } else {
-
-            ctx.fillStyle = "#171717";
-
-        }
-
-        ctx.fillRect(this.rectWidth * (i - startIdx), 0, this.rectWidth, canvas.height);
-
-    }
-
+  pipeLocation[i].x -= 2; //move pipes left
+  ctx.drawImage(topPipesPic, pipeLocation[i].x, 0 - (topPipesPic.height - pipeLocation[i].y));
+  ctx.drawImage(btmPipesPic, pipeLocation[i].x, pipeLocation[i].y + gapConst);
+  if (pipeLocation[i].x == 260){ 
+      spawnPipe(); //spawn new pipe
+  }
 ```
 
-* Random pipe generation
+* Collision detection was implemented with respect to each character's unique hitbox. Dimensions were checked against both the upper and lower pipes.
 
 ```
-
-    row.position.y = i*2; //position of row height
-
-    row.rotation.y = 30*i * Math.PI/180; //angle for spiral
-
+  if( (((player.x <= pipeLocation[i].x && player.x + player.pWidth >= pipeLocation[i].x) //hit left half
+      || (player.x >= pipeLocation[i].x && player.x + player.pWidth <= pipeLocation[i].x + topPipesPic.width) //hit inside 
+      || (player.x <= pipeLocation[i].x + topPipesPic.width && player.x + player.pWidth >= pipeLocation[i].x + topPipesPic.width)) //hit right half
+      && (player.y <= pipeLocation[i].y || player.y + player.pHeight >= pipeLocation[i].y + gapConst))
+      || (player.y + player.pHeight >= c.height - fgHeight)){ //hit ground
+      crash = true;
+      break;
+  }
 ```
 
 ## Coming soon
 
 - Unique background and physics for each character
 - Background music and effects
-- Touch integration
+- Mobile friendly

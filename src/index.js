@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let ctx = c.getContext('2d');
     let player = {"x":50, "y":0, "v":0, "pWidth": 0, "pHeight": 0};
     let charChoice;
-    let gapConst = 120;
+    let gapConst = 130;
     let fgHeight = 40;
     let score = highScore =  0;
     let motionTrailLength = 30;
