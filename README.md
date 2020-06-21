@@ -7,20 +7,20 @@ Browser implementation of the classic Flappy Bird mobile game, with additional c
 * HTML5 / CSS3 / JS
 
 ## Features
+
+### Character selection
 * Choose from a selection of characters with unique physics attributes.
 <p align="center">
   <img max-width="600px" height="auto" src="assets\gifs\char_select2.gif">
 </p>
 
-* Pipe obstacles generate at random heights over time.
+### Score tracking
 * Score counter tracks your current and previous high score.
 <p align="center">
   <img max-width="600px" height="auto" src="assets\gifs\demo_play2.gif">
 </p>
 
-
-## Challenges
-
+### Obstacle generation
 * Pipes are generated with consistent spacing between each other horizontally and veritcally, with the gaps appearing at random heights. This was
   created by saving the most recent pipes into an array and deleting ones that the player has passed. Locations are updated and 
   pipes are redrawn with every animation frame, allowing the obstacles to approach smoothly and consistently.
@@ -34,6 +34,7 @@ Browser implementation of the classic Flappy Bird mobile game, with additional c
   }
 ```
 
+### Collision detection
 * Collision detection was implemented with respect to each character's unique hitbox. Dimensions were checked against both the upper and lower pipes.
 
 ```
