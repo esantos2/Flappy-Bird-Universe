@@ -10,8 +10,12 @@ body {
     text-shadow: 2px 2px 2px rgb(112, 112, 112);
 }
 
-.title{
+header{
     font-family: "Press Start 2P";
+}
+
+header p{
+    font-size: 1em;
 }
 
 .mainScreen{
