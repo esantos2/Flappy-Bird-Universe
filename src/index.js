@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let update;
     let crash = false;
     let newScore = false;
-    // c.style.display = "none"; //Makes Game Map invisible
     
     //current score, hidden at start
     let currentScore = document.createElement("div");

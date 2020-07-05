@@ -40,7 +40,6 @@ header p{
 }
 
 #startButton:hover{
-    /* background-color: rgb(59, 137, 240); */
     color: white;
     border-color: white;
     cursor: pointer;
