@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //scrolling background
     window.onload = function(){
-        let scrollSpeed = 10;
         const bgScroll = function (){
             ctx.drawImage(bgDay, 0, 0);
         }
