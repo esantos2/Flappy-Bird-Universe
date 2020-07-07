@@ -146,6 +146,14 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleScoreDisplay();
         window.addEventListener('keypress',keyHandler);
         window.requestAnimationFrame(drawEntities);
+
+        let bgSound = document.createElement("audio");
+        bgSound.src = "rick_astley.mp3";
+        bgSound.setAttribute("preload", "auto");
+        bgSound.setAttribute("controls", "none");
+        bgSound.style.display = "none";
+        document.body.appendChild(bgSound);
+        bgSound.play();
     }
 
     function keyHandler(e){
