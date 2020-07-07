@@ -41,6 +41,24 @@ document.addEventListener("DOMContentLoaded", () => {
     let update;
     let crash = false;
     let newScore = false;
+
+    //background music
+    const addMusic = () => {
+        let findAudio = document.querySelector("audio");
+        if (findAudio) document.body.removeChild(findAudio);
+        let bgAudio = document.createElement("audio");
+        bgAudio.autoplay = true;
+        bgAudio.loop = true;
+        bgAudio.controls = true;
+        bgAudio.volume = 0.3;
+
+        let bgSource = document.createElement("source");
+        bgSource.src = "assets/audio/rick_astley.mp3";
+        bgSource.type = "audio/mp3";
+        
+        bgAudio.appendChild(bgSource);
+        document.body.appendChild(bgAudio);
+    }
     
     //current score, hidden at start
     let currentScore = document.createElement("div");
@@ -146,14 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleScoreDisplay();
         window.addEventListener('keypress',keyHandler);
         window.requestAnimationFrame(drawEntities);
-
-        let bgSound = document.createElement("audio");
-        bgSound.src = "rick_astley.mp3";
-        bgSound.setAttribute("preload", "auto");
-        bgSound.setAttribute("controls", "none");
-        bgSound.style.display = "none";
-        document.body.appendChild(bgSound);
-        bgSound.play();
+        addMusic();
     }
 
     function keyHandler(e){
