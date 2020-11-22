@@ -1,7 +1,7 @@
 const CONSTANTS = {
     BIRD_WIDTH: 40,
     BIRD_HEIGHT: 30,
-    FLAP_SPEED: 12,
+    FLAP_SPEED: 8,
     GRAVITY: 0.4,
     TERMINAL_VELOCITY: 12
 };
@@ -52,6 +52,7 @@ export default class Bird {
 
     animate(ctx){
         //receives canvas context, animates bird movement and physics
+        this.moveBird();
         this.drawBird(ctx);
     }
 }
