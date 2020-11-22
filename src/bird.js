@@ -14,6 +14,16 @@ export default class Bird {
         this.velocity = 0;
     }
 
+    getBounds(){
+        //returns an object with the current bounds of the bird
+        return {
+            left: this.x,
+            right: this.x + CONSTANTS.BIRD_WIDTH,
+            top: this.y,
+            bottom: this.y + CONSTANTS.BIRD_HEIGHT
+        };
+    }
+
     drawBird(ctx){
         //receives canvas context, draws bird
         ctx.fillStyle = "gold";
