@@ -41,10 +41,21 @@ export default class Game {
         this.animate();
     }
 
+    gameOver(){
+        //returns true if bird collides with pipe
+        return this.level.collidesWith(this.bird.getBounds());
+    }
+
     animate(){
         //creates images on canvas while the game is running
         this.level.animate(this.ctx);
         this.bird.animate(this.ctx);
+
+        //check for collisions, end game if bird hits pipe
+        if (this.gameOver()){
+            this.restart();
+        }
+
         if (this.running) requestAnimationFrame(() => this.animate());
     }
 
