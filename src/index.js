@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleScoreDisplay();
         window.addEventListener('keypress',keyHandler);
         window.requestAnimationFrame(drawEntities);
-        addMusic();
+        // addMusic();
     }
 
     function keyHandler(e){
