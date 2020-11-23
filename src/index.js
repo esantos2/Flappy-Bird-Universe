@@ -1,3 +1,8 @@
+import Game from "./game";
+const canvas = document.getElementById('canvas');
+new Game(canvas);
+
+/*
 //images
 let charLinks = ["assets/images/flappyBird.png", "assets/images/Fish.png", "assets/images/NyanCat.png",
                  "assets/images/angryBird.png", "assets/images/marioCape.png", "assets/images/Bananya.png"];
@@ -342,3 +347,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 })
+
+*/
