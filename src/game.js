@@ -1,7 +1,6 @@
 import Bird from "./bird";
 import Level from "./level";
 
-
 export default class Game {
     constructor(canvas){
         this.ctx = canvas.getContext("2d");
@@ -12,6 +11,7 @@ export default class Game {
         this.level = null;
         this.bird = null;
         this.running = false;
+        this.score = 0;
         this.addEvents();
         this.restart();
     }
@@ -27,10 +27,17 @@ export default class Game {
         this.ctx.canvas.addEventListener("mousedown", () => this.click());  //mousedown calls click()
     }
 
+    drawScore() {
+        //draws the score at the top of the canvas
+        const currentScore = document.querySelector(".show-score");
+        currentScore.innerHTML = this.score;
+    }
+
     restart(){
         //reset the level, bird, running status, then call animate
         this.level = new Level(this.dimensions);
         this.bird = new Bird(this.dimensions);
+        this.score = 0;
         this.running = false;
         this.animate();
     }
@@ -55,6 +62,10 @@ export default class Game {
         if (this.gameOver()){
             this.restart();
         }
+
+        //update and draw score
+        this.level.updateScore(this.bird.getBounds(), () => this.score++ );
+        this.drawScore();
 
         if (this.running) requestAnimationFrame(() => this.animate());
     }
