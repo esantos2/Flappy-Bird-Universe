@@ -11,10 +11,11 @@ export default class Game {
         };
         this.level = null;
         this.bird = null;
+        this.selectedChar = "";
         this.running = false;
         this.score = 0;
         this.addEvents();
-        this.restart();
+        this.reset();
         this.toggleTitleScreen();
     }
 
@@ -25,9 +26,10 @@ export default class Game {
 
     _showMenu(menuElement, titleElement){
         //receives menu and title elements, toggles background and menu visibility
-        this._toggleVisibility(menuElement);
-        this._toggleVisibility(titleElement);
-        this._toggleVisibility(document.querySelector(".backBox"));
+        const backBoxElement = document.querySelector(".backBox");
+        [menuElement, titleElement, backBoxElement].forEach( ele => {
+            this._toggleVisibility(ele);
+        });
     }
 
     toggleTitleScreen(){
@@ -67,31 +69,27 @@ export default class Game {
     handleSelection(){
         return (e) => {
             e.preventDefault();
-            const name = parseInt(e.target.id);
-            //retrieve selected char details
+            //retrieve selected char details and initialize bird instance
+            this.selectedChar = e.target.id;
+
+            //close character selection menu
             const charSelection = document.querySelector(".charSelection");
             const menuTitle = document.querySelector(".menuTitle");
             this._showMenu(charSelection, menuTitle);
+
+            //start game
             this.play();
         }
     }
 
-    startGame(){
-        //starts game by setting running status and calling restart
-
-        //initializes bird, level, running, score
-            //basically the current restart()
-    }
-
-    click(){
-        //clicking makes bird fly up, or starts the game if not running
-        if (!this.running) this.play();
-        this.bird.flap();
+    handleCanvasClick(){
+        //clicking makes bird fly up if game is running
+        if (this.running) this.bird.flap();
     }
 
     addEvents(){
         //click on canvas makes bird fly
-        this.ctx.canvas.addEventListener("mousedown", () => this.click());  //mousedown calls click()
+        this.ctx.canvas.addEventListener("mousedown", () => this.handleCanvasClick());  //mousedown calls click()
 
         //start button leads to character selection screen
         const startButton = document.querySelector(".startButton");
@@ -108,18 +106,19 @@ export default class Game {
         currentScore.innerHTML = this.score;
     }
 
-    restart(){
+    reset(){
         //reset the level, bird, running status, then call animate
         this.level = new Level(this.dimensions);
-        this.bird = new Bird(this.dimensions);
+        this.bird = null;
         this.score = 0;
         this.running = false;
         this.animate();
     }
 
     play(){
-        //begin playing game, set running status and start animation
+        //begin playing game: set running status, initializes character, and start animation
         this.running = true;
+        this.bird = new Bird(this.dimensions, CHAR_INFO.getCharDetails(this.selectedChar));
         this.animate();
     }
 
@@ -131,18 +130,21 @@ export default class Game {
     animate(){
         //creates images on canvas while the game is running
         this.level.animate(this.ctx);
-        if (this.running) this.bird.animate(this.ctx);
+        if (!this.running) return;
+        this.bird.animate(this.ctx);
 
         //check for collisions, end game if bird hits pipe
         if (this.gameOver()){
-            this.restart();
+            this.reset();
+            return;
         }
 
         //update and draw score
         this.level.updateScore(this.bird.getBounds(), () => this.score++ );
         this.drawScore();
 
-        if (this.running) requestAnimationFrame(() => this.animate());
+        //get next animation frame
+        requestAnimationFrame(() => this.animate());
     }
 
 }
