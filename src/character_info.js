@@ -45,3 +45,21 @@ export const allCharInfo = {
         callback: null
     }
 }
+
+const _getCharImage = imgSource => {
+    //creates and returns an image element
+    const pic = new Image();
+    pic.src = imgSource;
+    return pic;
+}
+
+//create array of image elements w/ event listeners
+export const createCharacterMenu = (charSelectionBox, callback) => {
+    const characterNames = Object.keys(allCharInfo);
+    characterNames.forEach( (name, idx) => {
+        const charImage = _getCharImage(allCharInfo[name].link);
+        charImage.setAttribute("id", `${name}`);
+        charImage.addEventListener("click", callback);
+        charSelectionBox.appendChild(charImage);
+    });
+}
