@@ -1,4 +1,4 @@
-import Bird from "./bird";
+import Player from "./player";
 import Level from "./level";
 import * as CHAR_INFO from "./character_info";
 
@@ -10,7 +10,7 @@ export default class Game {
             height: canvas.height
         };
         this.level = null;
-        this.bird = null;
+        this.player = null;
         this.selectedChar = "";
         this.running = false;
         this.score = 0;
@@ -40,7 +40,7 @@ export default class Game {
     }
 
     toggleCharacterSelectionScreen(){
-        //presents character selection, initializes bird object and calls startGame
+        //presents character selection, initializes player object and calls startGame
         const charSelection = document.querySelector(".charSelection");
         const menuTitle = document.querySelector(".menuTitle");
         menuTitle.innerHTML = "Choose your character!";
@@ -53,7 +53,7 @@ export default class Game {
         //called when gameOver
         //presents score, high score, options
             //Restart
-                //call start game w/ current bird details --> getBirdAttributes()
+                //call start game w/ current player details --> getBirdAttributes()
             //change character
                 //call toggleCharacterSelectionScreen()
     }
@@ -69,7 +69,7 @@ export default class Game {
     handleSelection(){
         return (e) => {
             e.preventDefault();
-            //retrieve selected char details and initialize bird instance
+            //retrieve selected char details and initialize player instance
             this.selectedChar = e.target.id;
 
             //close character selection menu
@@ -83,12 +83,12 @@ export default class Game {
     }
 
     handleCanvasClick(){
-        //clicking makes bird fly up if game is running
-        if (this.running) this.bird.flap();
+        //clicking makes player fly up if game is running
+        if (this.running) this.player.flap();
     }
 
     addEvents(){
-        //click on canvas makes bird fly
+        //click on canvas makes player fly
         this.ctx.canvas.addEventListener("mousedown", () => this.handleCanvasClick());  //mousedown calls click()
 
         //start button leads to character selection screen
@@ -107,9 +107,9 @@ export default class Game {
     }
 
     reset(){
-        //reset the level, bird, running status, then call animate
+        //reset the level, player, running status, then call animate
         this.level = new Level(this.dimensions);
-        this.bird = null;
+        this.player = null;
         this.score = 0;
         this.running = false;
         this.animate();
@@ -118,29 +118,29 @@ export default class Game {
     play(){
         //begin playing game: set running status, initializes character, and start animation
         this.running = true;
-        this.bird = new Bird(this.dimensions, CHAR_INFO.getCharDetails(this.selectedChar));
+        this.player = new Player(this.dimensions, CHAR_INFO.getCharDetails(this.selectedChar));
         this.animate();
     }
 
     gameOver(){
-        //returns true if bird collides with pipe
-        return this.level.collidesWith(this.bird.getBounds());
+        //returns true if player collides with pipe
+        return this.level.collidesWith(this.player.getBounds());
     }
 
     animate(){
         //creates images on canvas while the game is running
         this.level.animate(this.ctx);
         if (!this.running) return;
-        this.bird.animate(this.ctx);
+        this.player.animate(this.ctx);
 
-        //check for collisions, end game if bird hits pipe
+        //check for collisions, end game if player hits pipe
         if (this.gameOver()){
             this.reset();
             return;
         }
 
         //update and draw score
-        this.level.updateScore(this.bird.getBounds(), () => this.score++ );
+        this.level.updateScore(this.player.getBounds(), () => this.score++ );
         this.drawScore();
 
         //get next animation frame

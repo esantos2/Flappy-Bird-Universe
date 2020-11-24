@@ -4,7 +4,7 @@ const CONSTANTS = {
     TERMINAL_VELOCITY: 12
 };
 
-export default class Bird {
+export default class Player {
     constructor(dimensions, charDetails){
         this.dimensions = dimensions;
         this.width = charDetails.width;
@@ -15,7 +15,7 @@ export default class Bird {
     }
 
     getBounds(){
-        //returns an object with the current bounds of the bird
+        //returns an object with the current bounds of the player
         return {
             left: this.x,
             right: this.x + this.width,
@@ -24,19 +24,19 @@ export default class Bird {
         };
     }
 
-    drawBird(ctx){
-        //receives canvas context, draws bird
+    drawPlayer(ctx){
+        //receives canvas context, draws player
         ctx.fillStyle = "gold";
         ctx.fillRect(this.x, this.y, this.width, this.height);
         // ctx.drawImage(charChoice, player.x, player.y, player.pWidth, player.pHeight);
     }
 
-    moveBird(){
-        //updates bird velocity and position for each frame
+    movePlayer(){
+        //updates player velocity and position for each frame
         this.y += this.velocity;            //update vertical position
         this.velocity += CONSTANTS.GRAVITY  //update acceleration due to gravity
 
-        //prevent bird from exceeding terminal velocity in positive and negative directions
+        //prevent player from exceeding terminal velocity in positive and negative directions
         if (Math.abs(this.velocity) > CONSTANTS.TERMINAL_VELOCITY){
             if (this.velocity > 0){
                 this.velocity = CONSTANTS.TERMINAL_VELOCITY;
@@ -47,13 +47,13 @@ export default class Bird {
     }
 
     flap(){
-        //adjusts velocity for bird to fly up
+        //adjusts velocity for player to fly up
         this.velocity = -1 * CONSTANTS.FLAP_SPEED;
     }
 
     animate(ctx){
-        //receives canvas context, animates bird movement and physics
-        this.moveBird();
-        this.drawBird(ctx);
+        //receives canvas context, animates player movement and physics
+        this.movePlayer();
+        this.drawPlayer(ctx);
     }
 }
