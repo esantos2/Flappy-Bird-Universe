@@ -14,6 +14,39 @@ export default class Game {
         this.score = 0;
         this.addEvents();
         this.restart();
+        //run title screen until press start --> char select
+    }
+
+    titleScreen(){
+        //runs title screen animation, starting game goes to character selection screen
+        
+        //run pipe animation until start button clicked
+    }
+
+    characterSelectionScreen(){
+        //presents character selection, initializes bird object and calls startGame
+
+        //show char selection, selected char attributes loaded into bird instance
+            //send bird attributes to startGame
+            //call addEvents (flap listener lol)
+    }
+
+    startGame(){
+        //starts game by setting running status and calling restart
+
+        //initializes bird, level, running, score
+            //basically the current restart()
+    }
+
+    endGameScreen(){
+        //presents end game screen and options to try again or choose character
+
+        //called when gameOver
+        //presents score, high score, options
+            //Restart
+                //call start game w/ current bird details --> getBirdAttributes()
+            //change character
+                //call characterSelectionScreen()
     }
 
     click(){
