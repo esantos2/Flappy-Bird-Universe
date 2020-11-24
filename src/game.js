@@ -14,13 +14,22 @@ export default class Game {
         this.score = 0;
         this.addEvents();
         this.restart();
-        //run title screen until press start --> char select
+        this.titleScreen();
     }
 
     titleScreen(){
         //runs title screen animation, starting game goes to character selection screen
         
+        //show start button
+        const startButton = document.querySelector(".startButton");
+        this._toggleStartButton(startButton);
+
         //run pipe animation until start button clicked
+    }
+
+    _toggleStartButton(startButton){
+        //receives reference to start button element, toggles visibility
+        startButton.id = (startButton.id !== "show") ? "show" : "no-show";
     }
 
     characterSelectionScreen(){
@@ -56,8 +65,16 @@ export default class Game {
     }
 
     addEvents(){
-        //add events to canvas
+        //click on canvas makes bird fly
         this.ctx.canvas.addEventListener("mousedown", () => this.click());  //mousedown calls click()
+
+        //start button leads to character selection screen
+        const startButton = document.querySelector(".startButton");
+        startButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            this._toggleStartButton(startButton);
+            this.characterSelectionScreen();
+        })
     }
 
     drawScore() {
@@ -89,7 +106,7 @@ export default class Game {
     animate(){
         //creates images on canvas while the game is running
         this.level.animate(this.ctx);
-        this.bird.animate(this.ctx);
+        if (this.running) this.bird.animate(this.ctx);
 
         //check for collisions, end game if bird hits pipe
         if (this.gameOver()){
