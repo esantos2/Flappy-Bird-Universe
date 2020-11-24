@@ -132,9 +132,6 @@ canvas{
 }
 
 .endButtons{
-    font-family: "Press Start 2P";
-    font-size: 12px;
-    color: white;
     display: flex;
     flex-direction: column;
     top: 370px;
@@ -148,7 +145,9 @@ canvas{
     border: 5px solid blanchedalmond;
     border-radius: 20px;
     padding: 7px;
-    margin: 4px;
+    font-family: "Press Start 2P";
+    font-size: 12px;
+    color: white;
 }
 
 .endButton:hover{
@@ -156,7 +155,6 @@ canvas{
     border-color: maroon;
     color: maroon;
     cursor: pointer;
-
 }
 
 .show-score{
