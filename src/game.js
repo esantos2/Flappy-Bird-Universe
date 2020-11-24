@@ -1,5 +1,6 @@
 import Bird from "./bird";
 import Level from "./level";
+import * as CHAR_INFO from "./character_info";
 
 export default class Game {
     constructor(canvas){
@@ -14,40 +15,37 @@ export default class Game {
         this.score = 0;
         this.addEvents();
         this.restart();
-        this.titleScreen();
+        this.toggleTitleScreen();
     }
 
-    titleScreen(){
-        //runs title screen animation, starting game goes to character selection screen
-        
-        //show start button
-        const startButton = document.querySelector(".startButton");
-        this._toggleStartButton(startButton);
+    _toggleVisibility(element){
+        //receives reference to element, toggles visibility
+        element.id = (element.id !== "show") ? "show" : "no-show";
+    }
 
+    _showMenu(menuElement, titleElement){
+        //receives menu and title elements, toggles background and menu visibility
+        this._toggleVisibility(menuElement);
+        this._toggleVisibility(titleElement);
+        this._toggleVisibility(document.querySelector(".backBox"));
+    }
+
+    toggleTitleScreen(){
+        //runs title screen animation, starting game goes to character selection screen
+        this._toggleVisibility(document.querySelector(".startButton")); //show start button
+        
         //run pipe animation until start button clicked
     }
 
-    _toggleStartButton(startButton){
-        //receives reference to start button element, toggles visibility
-        startButton.id = (startButton.id !== "show") ? "show" : "no-show";
-    }
-
-    characterSelectionScreen(){
+    toggleCharacterSelectionScreen(){
         //presents character selection, initializes bird object and calls startGame
-
-        //show char selection, selected char attributes loaded into bird instance
-            //send bird attributes to startGame
-            //call addEvents (flap listener lol)
+        const charSelection = document.querySelector(".charSelection");
+        const menuTitle = document.querySelector(".menuTitle");
+        menuTitle.innerHTML = "Choose your character!";
+        this._showMenu(charSelection, menuTitle);
     }
 
-    startGame(){
-        //starts game by setting running status and calling restart
-
-        //initializes bird, level, running, score
-            //basically the current restart()
-    }
-
-    endGameScreen(){
+    toggleEndGameScreen(){
         //presents end game screen and options to try again or choose character
 
         //called when gameOver
@@ -55,7 +53,34 @@ export default class Game {
             //Restart
                 //call start game w/ current bird details --> getBirdAttributes()
             //change character
-                //call characterSelectionScreen()
+                //call toggleCharacterSelectionScreen()
+    }
+
+    handleStartButton(){
+        return (e) => {
+            e.preventDefault();
+            this._toggleVisibility(document.querySelector(".startButton"));
+            this.toggleCharacterSelectionScreen();
+        }
+    }
+
+    handleSelection(){
+        return (e) => {
+            e.preventDefault();
+            const name = parseInt(e.target.id);
+            //retrieve selected char details
+            const charSelection = document.querySelector(".charSelection");
+            const menuTitle = document.querySelector(".menuTitle");
+            this._showMenu(charSelection, menuTitle);
+            this.play();
+        }
+    }
+
+    startGame(){
+        //starts game by setting running status and calling restart
+
+        //initializes bird, level, running, score
+            //basically the current restart()
     }
 
     click(){
@@ -70,11 +95,11 @@ export default class Game {
 
         //start button leads to character selection screen
         const startButton = document.querySelector(".startButton");
-        startButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            this._toggleStartButton(startButton);
-            this.characterSelectionScreen();
-        })
+        startButton.addEventListener("click", this.handleStartButton());
+
+        //load characters to character selection menu
+        const charSelection = document.querySelector(".charSelection");
+        CHAR_INFO.createCharacterMenu(charSelection, this.handleSelection());
     }
 
     drawScore() {
