@@ -24,7 +24,7 @@ header p{
     width: 480px;
 }
 
-#startButton {
+.startButton {
     font-size: 20px;
     width: 120px;
     font-family: sans-serif;
@@ -39,7 +39,7 @@ header p{
     box-shadow: 5px 10px 28px #888888;
 }
 
-#startButton:hover{
+.startButton:hover{
     color: white;
     border-color: white;
     cursor: pointer;
@@ -75,7 +75,7 @@ canvas{
     color: rgb(161, 255, 161);
 }
 
-#backBox{
+.backBox{
     position: absolute;
     top: 240px;
     background-color: blanchedalmond;
@@ -87,7 +87,7 @@ canvas{
 
 }
 
-.selectionTitle{
+.menuTitle{
     font-family: "Press Start 2P";
     color: rgb(255, 102, 0);
     display: flex;
@@ -170,5 +170,13 @@ canvas{
 }
 
 .no-score{
+    display: none;
+}
+
+#show{
+    display: inline-block;
+}
+
+#no-show{
     display: none;
 }
