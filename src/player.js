@@ -7,11 +7,19 @@ const CONSTANTS = {
 export default class Player {
     constructor(dimensions, charDetails){
         this.dimensions = dimensions;
+        this.image = this.getImage(charDetails.link);
         this.width = charDetails.width;
         this.height = charDetails.height;
         this.x = this.dimensions.width / 3;
         this.y = 0;
         this.velocity = 0;
+    }
+
+    getImage(link){
+        //receives image source link, creates and returns an image element
+        const charImage = new Image;
+        charImage.src = link;
+        return charImage;
     }
 
     getBounds(){
@@ -26,9 +34,7 @@ export default class Player {
 
     drawPlayer(ctx){
         //receives canvas context, draws player
-        ctx.fillStyle = "gold";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.drawImage(charChoice, player.x, player.y, player.pWidth, player.pHeight);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
     movePlayer(){
