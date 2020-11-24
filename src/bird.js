@@ -1,16 +1,16 @@
 const CONSTANTS = {
-    BIRD_WIDTH: 40,
-    BIRD_HEIGHT: 30,
     FLAP_SPEED: 8,
     GRAVITY: 0.4,
     TERMINAL_VELOCITY: 12
 };
 
 export default class Bird {
-    constructor(dimensions){
+    constructor(dimensions, charDetails){
         this.dimensions = dimensions;
+        this.width = charDetails.width;
+        this.height = charDetails.height;
         this.x = this.dimensions.width / 3;
-        this.y = this.dimensions.height / 2;
+        this.y = 0;
         this.velocity = 0;
     }
 
@@ -18,16 +18,17 @@ export default class Bird {
         //returns an object with the current bounds of the bird
         return {
             left: this.x,
-            right: this.x + CONSTANTS.BIRD_WIDTH,
+            right: this.x + this.width,
             top: this.y,
-            bottom: this.y + CONSTANTS.BIRD_HEIGHT
+            bottom: this.y + this.height
         };
     }
 
     drawBird(ctx){
         //receives canvas context, draws bird
         ctx.fillStyle = "gold";
-        ctx.fillRect(this.x, this.y, CONSTANTS.BIRD_WIDTH, CONSTANTS.BIRD_HEIGHT);
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        // ctx.drawImage(charChoice, player.x, player.y, player.pWidth, player.pHeight);
     }
 
     moveBird(){
