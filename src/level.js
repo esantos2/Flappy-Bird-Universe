@@ -99,6 +99,18 @@ export default class Level {
         ctx.fillRect(0, 0, this.dimensions.width, this.dimensions.height);
     }
 
+    updateScore(birdBounds, addToScore){
+        //receives bird hitbox and addToScore function, adds 1 to score if pipe is successfully passed
+        this.pipes.forEach( pipeSet => {
+            if (pipeSet.topPipe.right < birdBounds.left){
+                if (!pipeSet.passed){
+                    pipeSet.passed = true;
+                    addToScore();
+                }
+            }
+        });
+    }
+
     animate(ctx){
         //receives canvas context, draws structures in the level
         this.drawBackground(ctx);
