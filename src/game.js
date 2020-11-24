@@ -49,9 +49,14 @@ export default class Game {
 
     toggleEndGameScreen(){
         //presents end game screen and options to try again or choose character
+        const endScreen = document.querySelector(".endScreen");
+        const menuTitle = document.querySelector(".menuTitle");
+        menuTitle.innerHTML = "GAME OVER";
+        this._showMenu(endScreen, menuTitle);
+        
+        //score details
 
-        //called when gameOver
-        //presents score, high score, options
+        //buttons
             //Restart
                 //call start game w/ current player details --> getBirdAttributes()
             //change character
@@ -73,12 +78,27 @@ export default class Game {
             this.selectedChar = e.target.id;
 
             //close character selection menu
-            const charSelection = document.querySelector(".charSelection");
-            const menuTitle = document.querySelector(".menuTitle");
-            this._showMenu(charSelection, menuTitle);
+            this.toggleCharacterSelectionScreen();
 
             //start game
             this.play();
+        }
+    }
+
+    handleEndScreen(option){
+        return (e) => {
+            e.preventDefault();
+            
+            //close end screen menu
+            this.toggleEndGameScreen();
+
+            //redirect based on option chosen
+            this.reset();
+            if (option === "restart"){  //restart with same character
+                this.play();
+            } else {                    //reselect character
+                this.toggleCharacterSelectionScreen();
+            }
         }
     }
 
@@ -88,8 +108,10 @@ export default class Game {
     }
 
     addEvents(){
+        //adds all event listeners to the appropriate elements
+
         //click on canvas makes player fly
-        this.ctx.canvas.addEventListener("mousedown", () => this.handleCanvasClick());  //mousedown calls click()
+        this.ctx.canvas.addEventListener("mousedown", () => this.handleCanvasClick());
 
         //start button leads to character selection screen
         const startButton = document.querySelector(".startButton");
@@ -98,6 +120,12 @@ export default class Game {
         //load characters to character selection menu
         const charSelection = document.querySelector(".charSelection");
         CHAR_INFO.createCharacterMenu(charSelection, this.handleSelection());
+
+        //endscreen buttons, options to restart or choose characer
+        const restartButton = document.getElementById("restart");
+        restartButton.addEventListener("click", this.handleEndScreen("restart"));
+        const changeCharButton = document.getElementById("charSelect");
+        changeCharButton.addEventListener("click", this.handleEndScreen("charSelect"));
     }
 
     drawScore() {
@@ -135,7 +163,8 @@ export default class Game {
 
         //check for collisions, end game if player hits pipe
         if (this.gameOver()){
-            this.reset();
+            this.toggleEndGameScreen();
+            // this.reset();
             return;
         }
 
