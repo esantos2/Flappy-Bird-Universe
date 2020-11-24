@@ -7,7 +7,7 @@ const MARIO_CAPE = "marioCape";
 const BANANYA_CAT = "bananyaCat";
 
 //all character image info
-export const allCharInfo = {
+const allCharInfo = {
     [FLAPPY_BIRD]: {
         link: "assets/images/flappyBird.png",     // 51x36
         width: 51,
@@ -62,4 +62,9 @@ export const createCharacterMenu = (charSelectionBox, callback) => {
         charImage.addEventListener("click", callback);
         charSelectionBox.appendChild(charImage);
     });
+}
+
+//retrieve individual character details and return as an object
+export const getCharDetails = name => {
+    return allCharInfo[name];
 }
