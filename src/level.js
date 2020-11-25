@@ -3,18 +3,29 @@ const CONSTANTS = {
     PIPE_WIDTH: 50,
     PIPE_SPACING: 220,
     EDGE_BUFFER: 50,
-    PIPE_SPEED: 2
+    PIPE_SPEED: 2,
+    FOREGROUND_HEIGHT: 40
 };
 
 export default class Level {
     constructor(dimensions){
         this.dimensions = dimensions;
+        this.backgroundImage = this.getImage("assets/images/bgDay.png");  // 600x480
+        this.foregroundImage = this.getImage("assets/images/fgDay.png");  // 480x60
+        //pipe images
         const initialSpawn = this.dimensions.width + (60 * CONSTANTS.PIPE_SPEED);
         this.pipes = [
             this.getRandomPipe(initialSpawn),
             this.getRandomPipe(initialSpawn + CONSTANTS.PIPE_SPACING),
             this.getRandomPipe(initialSpawn + 2 * CONSTANTS.PIPE_SPACING)
         ];
+    }
+
+    getImage(link){
+        //receives a link to an image asset, returns image element
+        const newImage = new Image();
+        newImage.src = link;
+        return newImage;
     }
 
     collidesWith(birdBounds){
@@ -95,8 +106,12 @@ export default class Level {
 
     drawBackground(ctx){
         //receives canvas context, draws background
-        ctx.fillStyle = "PALETURQUOISE";
-        ctx.fillRect(0, 0, this.dimensions.width, this.dimensions.height);
+        ctx.drawImage(this.backgroundImage, 0, 0);
+    }
+
+    drawForeground(ctx){
+        //receives canvas context, draws foreground
+        ctx.drawImage(this.foregroundImage, 0, this.dimensions.height - CONSTANTS.FOREGROUND_HEIGHT);
     }
 
     updateScore(birdBounds, addToScore){
@@ -118,5 +133,8 @@ export default class Level {
         //update and draw pipes
         this.movePipes();
         this.drawPipes(ctx);
+
+        //draw foreground
+        this.drawForeground(ctx);
     }
 }
