@@ -186,8 +186,20 @@ canvas{
 
 #show{
     display: inline-block;
+    animation: fadeIn 1000ms;
+    -webkit-animation: fadeIn 1000ms;
 }
 
 #no-show{
     display: none;
+}
+
+@keyframes fadeIn{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@-webkit-keyframes fadeIn{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
