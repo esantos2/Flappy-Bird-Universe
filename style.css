@@ -127,10 +127,6 @@ canvas{
     top: 250px;
 }
 
-.endScreen > div{
-    margin-top: 7px;
-}
-
 .endButtons{
     display: flex;
     flex-direction: column;
@@ -157,6 +153,27 @@ canvas{
     cursor: pointer;
 }
 
+.finalScores{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.currentScore, .highScore{
+    display: flex;
+    flex-direction: column;
+    font-family: "Press Start 2P";
+    font-size: 20px;
+    color: darkred;
+    position: absolute;
+    top: 300px;
+}
+
+.highScore{
+    top: 334px;
+}
+
 .show-score{
     display: block;
     position: absolute;
@@ -165,10 +182,6 @@ canvas{
     font-size: 30px;
     text-align: center;
     text-shadow: 2px 2px 2px rgb(71, 71, 71);
-}
-
-.no-score{
-    display: none;
 }
 
 #show{

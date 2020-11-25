@@ -14,6 +14,7 @@ export default class Game {
         this.selectedChar = "";
         this.running = false;
         this.score = 0;
+        this.highScore = 0;
         this.addEvents();
         this.reset();
         this.toggleTitleScreen();
@@ -52,15 +53,8 @@ export default class Game {
         const endScreen = document.querySelector(".endScreen");
         const menuTitle = document.querySelector(".menuTitle");
         menuTitle.innerHTML = "GAME OVER";
+        this.showFinalScore();
         this._showMenu(endScreen, menuTitle);
-        
-        //score details
-
-        //buttons
-            //Restart
-                //call start game w/ current player details --> getBirdAttributes()
-            //change character
-                //call toggleCharacterSelectionScreen()
     }
 
     handleStartButton(){
@@ -134,6 +128,25 @@ export default class Game {
         currentScore.innerHTML = this.score;
     }
 
+    showFinalScore(){
+        //adds current score and high score to end game screen
+        const currentScoreBox = document.querySelector(".currentScore");
+        const highScoreBox = document.querySelector(".highScore");
+
+        //get score texts
+        const currentScoreText = `Score: ${this.score}`;
+        let highScoreText = `Best: ${this.highScore}`;
+        if (this.score > this.highScore){
+            //update high score
+            this.highScore = this.score;
+            highScoreText = `[NEW] Best: ${this.highScore}`;
+        }
+
+        //add to box element
+        currentScoreBox.innerHTML = currentScoreText;
+        highScoreBox.innerHTML = highScoreText;
+    }
+
     reset(){
         //reset the level, player, running status, then call animate
         this.level = new Level(this.dimensions);
@@ -164,7 +177,6 @@ export default class Game {
         //check for collisions, end game if player hits pipe
         if (this.gameOver()){
             this.toggleEndGameScreen();
-            // this.reset();
             return;
         }
 
