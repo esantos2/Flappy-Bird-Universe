@@ -120,6 +120,9 @@ export default class Game {
         restartButton.addEventListener("click", this.handleEndScreen("restart"));
         const changeCharButton = document.getElementById("charSelect");
         changeCharButton.addEventListener("click", this.handleEndScreen("charSelect"));
+
+        //prevent double clicking from highlighting text
+        this.ctx.canvas.onselectstart = () => { return false; };
     }
 
     drawScore() {
