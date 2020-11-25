@@ -4,7 +4,7 @@ const CONSTANTS = {
     PIPE_SPACING: 220,
     EDGE_BUFFER: 50,
     PIPE_SPEED: 2,
-    FOREGROUND_HEIGHT: 40
+    FOREGROUND_HEIGHT: 30
 };
 
 export default class Level {
@@ -36,6 +36,11 @@ export default class Level {
             const bottomHit = this._overlap(pipeSet.bottomPipe, birdBounds);
             if (topHit || bottomHit) hitDetection = true; 
         });
+
+        //if bird hits foreground, return true
+        const groundLevel = this.dimensions.height - CONSTANTS.FOREGROUND_HEIGHT;
+        if (birdBounds.bottom >= groundLevel) hitDetection = true;
+
         return hitDetection;
     }
 
