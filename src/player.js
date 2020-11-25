@@ -1,5 +1,5 @@
 const CONSTANTS = {
-    FLAP_SPEED: 8,
+    FLAP_SPEED: 7,
     GRAVITY: 0.4,
     TERMINAL_VELOCITY: 12
 };
@@ -39,8 +39,8 @@ export default class Player {
 
     movePlayer(){
         //updates player velocity and position for each frame
-        this.y += this.velocity;            //update vertical position
-        this.velocity += CONSTANTS.GRAVITY  //update acceleration due to gravity
+        this.y = Math.max(0, this.y + this.velocity);   //update vertical position, prevent from going above top of canvas
+        this.velocity += CONSTANTS.GRAVITY              //update acceleration due to gravity
 
         //prevent player from exceeding terminal velocity in positive and negative directions
         if (Math.abs(this.velocity) > CONSTANTS.TERMINAL_VELOCITY){
