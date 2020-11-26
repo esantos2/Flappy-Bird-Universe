@@ -173,8 +173,8 @@ export default class Game {
 
     animate(){
         //creates images on canvas while the game is running
-        this.level.animate(this.ctx);
         if (!this.running) return;
+        this.level.animate(this.ctx);
         this.player.animate(this.ctx);
 
         //check for collisions, end game if player hits pipe
