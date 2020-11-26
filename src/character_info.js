@@ -68,3 +68,39 @@ export const createCharacterMenu = (charSelectionBox, callback) => {
 export const getCharDetails = name => {
     return allCharInfo[name];
 }
+
+//callback effects
+let motionTrailLength = 30;
+let opacity = 0;
+let rainbowColors = ["255,0,0", "255,153,0", "255,255,0", "0,255,0", "0,102,255", "153,0,255"];
+
+function trailRainbow(){
+    let xPos = player.x;
+    for (let i = pastPosition.length - 1; i >=0 ; i--){ //draw trail length
+        let colorStream = 0;
+        opacity = (i + 1)/30;
+        //opacity = ((i + 1)/(pastPosition.length));
+        for (let j = 0; j < rainbowColors.length; j++){ //draw trail slice
+            ctx.beginPath();
+            ctx.fillStyle = "rgba(" + rainbowColors[j] + ","+ opacity + ")";
+            ctx.fillRect(xPos + 15, pastPosition[i].y + colorStream, 3, 6);
+            ctx.fill();
+            colorStream += 6;
+        }
+        xPos -=3;
+    }
+}
+
+function trailJetpack(){
+    let yPos = player.y;
+    for (let i = 20; i >= 0; i--){
+        opacity = ((i + 1)/(40));
+        if (player.v <= 0){
+            ctx.beginPath();
+            ctx.fillStyle = "rgba(255,102,153, "+ opacity + ")";
+            ctx.arc(player.x, yPos + (player.pHeight / 2), 7, 0, 2*Math.PI, true);
+            ctx.fill();
+        }
+        yPos += 3;
+    }
+}
