@@ -4,7 +4,8 @@ const CONSTANTS = {
     PIPE_SPACING: 220,
     EDGE_BUFFER: 50,
     PIPE_SPEED: 2,
-    FOREGROUND_HEIGHT: 30
+    FOREGROUND_HEIGHT: 30,
+    PIPE_IMAGE_HEIGHT: 480
 };
 
 export default class Level {
@@ -12,6 +13,8 @@ export default class Level {
         this.dimensions = dimensions;
         this.backgroundImage = this.getImage("assets/images/bgDay.png");  // 600x480
         this.foregroundImage = this.getImage("assets/images/fgDay.png");  // 480x60
+        this.topPipeImage = this.getImage("assets/images/pipesTop2.png"); // 52x480
+        this.btmPipeImage = this.getImage("assets/images/pipesBtm2.png"); // 52x480
         //pipe images
         const initialSpawn = this.dimensions.width + (60 * CONSTANTS.PIPE_SPEED);
         this.pipes = [
@@ -93,18 +96,19 @@ export default class Level {
     drawPipes(ctx){
         //receives cavnas context, draws pipes onto canvas
         this.pipes.forEach( pipe => {
-            ctx.fillStyle = "green";
-            ctx.fillRect( //draw top pipe
-                pipe.topPipe.left, 
-                pipe.topPipe.top, 
-                CONSTANTS.PIPE_WIDTH, 
-                pipe.topPipe.bottom - pipe.topPipe.top
+            ctx.drawImage(                  //draw top pipe image
+                this.topPipeImage,          //image
+                pipe.topPipe.left,          //left edge of image
+                pipe.topPipe.bottom - CONSTANTS.PIPE_IMAGE_HEIGHT, //top edge of image 
+                CONSTANTS.PIPE_WIDTH,       //image width
+                CONSTANTS.PIPE_IMAGE_HEIGHT //image height
             );
-            ctx.fillRect(//draw bottom pipe
-                pipe.bottomPipe.left, 
-                pipe.bottomPipe.top, 
-                CONSTANTS.PIPE_WIDTH, 
-                pipe.bottomPipe.bottom - pipe.bottomPipe.top
+            ctx.drawImage(                  //draw bottom pipe image
+                this.btmPipeImage,          //image
+                pipe.bottomPipe.left,       //left edge of image
+                pipe.bottomPipe.top,        //top edge of image
+                CONSTANTS.PIPE_WIDTH,       //image width
+                CONSTANTS.PIPE_IMAGE_HEIGHT //image height
             );
         })
     }
