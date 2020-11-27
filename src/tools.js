@@ -15,23 +15,25 @@ export default class Toolbox{
 
     addToolsToGame(){
         //adds toolbox to document body
-        this._addFpsButton();
-        this._addVolumeButton();
-        this._addTutorialButton();
+        const container = document.getElementsByClassName("toolbox");
+        this._addFpsButton(container);
+        this._addVolumeButton(container);
+        this._addTutorialButton(container);
     }
 
-    _addFpsButton(){
-        //adds button to add FPS counter onto canvas
+    _addFpsButton(container){
+        //receives container element, adds button to add FPS counter onto canvas
+        const newButton = this._createFpsButton();
+        container.appendChild(newButton);
+    }
+
+    _addVolumeButton(container){
+        //receives container element, adds button to adjust and/or mute game volume
 
     }
 
-    _addVolumeButton(){
-        //adds button to adjust and/or mute game volume
-
-    }
-
-    _addTutorialButton(){
-        //adds button that toggles tutorial modal
+    _addTutorialButton(container){
+        //receives container element, adds button that toggles tutorial modal
 
     }
 
@@ -57,7 +59,8 @@ export default class Toolbox{
 
     _createFpsButton(){
         //creates and returns button to toggle fps counter
-        
+        const newButton = document.createElement("button");
+        // newButton.addEventListener("click", this.toggle)
     }
 
     /******************************Audio **********************************/
