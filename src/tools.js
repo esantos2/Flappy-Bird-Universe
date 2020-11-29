@@ -11,6 +11,9 @@ export default class Toolbox{
         this.addToolsToGame();
         this.startTime = 0;
         this.frameNumber = 0;
+        this.showFPS = false;
+        this.showAudio = false;
+        this.showTutorial = false;
     }
 
     addToolsToGame(){
@@ -37,6 +40,11 @@ export default class Toolbox{
 
     }
 
+    drawToolsToCanvas(ctx){
+        //receives the canvas context, invoked in Game class to draw tool options and draw toggled tools to canvas
+        if (this.showFPS) this.drawFPS(ctx);    //draws fps counter to canvas
+    }
+
     /***************************FPS counter *******************************/
 
     getFPS(){
@@ -60,7 +68,10 @@ export default class Toolbox{
     _createFpsButton(){
         //creates and returns button to toggle fps counter
         const newButton = document.createElement("button");
-        // newButton.addEventListener("click", this.toggle)
+        newButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.showFPS = !this.showFPS;
+        });
     }
 
     /******************************Audio **********************************/
