@@ -1,9 +1,11 @@
 import Player from "./player";
 import Level from "./level";
 import * as CHAR_INFO from "./character_info";
+import Toolbox from "./tools";
 
 export default class Game {
     constructor(canvas){
+        this.tools = new Toolbox();
         this.ctx = canvas.getContext("2d");
         this.dimensions = {
             width: canvas.width,
@@ -176,6 +178,9 @@ export default class Game {
         if (!this.running) return;
         this.level.animate(this.ctx);
         this.player.animate(this.ctx);
+
+        //draw fps counter if activated
+        if (this.tools.showFPS) this.tools.drawFPS(this.ctx);
 
         //check for collisions, end game if player hits pipe
         if (this.gameOver()){

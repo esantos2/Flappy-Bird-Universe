@@ -1,7 +1,7 @@
 const CONSTANTS = {
     FPS_CORNER: {
-        x: 380,
-        y: 15
+        x: 10,
+        y: 20
     }
 };
 
@@ -18,7 +18,7 @@ export default class Toolbox{
 
     addToolsToGame(){
         //adds toolbox to document body
-        const container = document.getElementsByClassName("toolbox");
+        const container = document.querySelector(".toolbox");
         this._addFpsButton(container);
         this._addVolumeButton(container);
         this._addTutorialButton(container);
@@ -40,9 +40,9 @@ export default class Toolbox{
 
     }
 
-    drawToolsToCanvas(ctx){
-        //receives the canvas context, invoked in Game class to draw tool options and draw toggled tools to canvas
-        if (this.showFPS) this.drawFPS(ctx);    //draws fps counter to canvas
+    toggleSelectedStatus(element){
+        //receives element, toggles css class to indicate button is activated/deactivated
+
     }
 
     /***************************FPS counter *******************************/
@@ -51,7 +51,7 @@ export default class Toolbox{
         //calculates and returns frames per second
         this.frameNumber++;
         const d = new Date().getTime();
-        currentTime = (d - this.startTime) / 1000;
+        const currentTime = (d - this.startTime) / 1000;
         const result = Math.floor(this.frameNumber / currentTime);
         if (currentTime > 1){
             this.startTime = new Date().getTime();
@@ -62,16 +62,25 @@ export default class Toolbox{
 
     drawFPS(ctx){
         //receives canvas context, prints current frames per second
-        ctx.fillText("FPS : " + fps.getFPS(), CONSTANTS.FPS_CORNER.x, CONSTANTS.FPS_CORNER.y);
+        ctx.font = "18px Helvetica"
+        ctx.fillText("FPS : " + this.getFPS(), CONSTANTS.FPS_CORNER.x, CONSTANTS.FPS_CORNER.y);
     }
 
     _createFpsButton(){
         //creates and returns button to toggle fps counter
         const newButton = document.createElement("button");
-        newButton.addEventListener("click", (e) => {
+        newButton.innerHTML = "Toggle FPS"
+        newButton.addEventListener("click", this._handleFpsClick());
+        return newButton;
+    }
+
+    _handleFpsClick(){
+        return (e) => {
             e.preventDefault();
+            const fpsButton = e.target;
             this.showFPS = !this.showFPS;
-        });
+            
+        }
     }
 
     /******************************Audio **********************************/
