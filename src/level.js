@@ -22,6 +22,8 @@ export default class Level {
             this.getRandomPipe(initialSpawn + CONSTANTS.PIPE_SPACING),
             this.getRandomPipe(initialSpawn + 2 * CONSTANTS.PIPE_SPACING)
         ];
+        //background scrolling
+        this.backgroundX = 0;
     }
 
     getImage(link){
@@ -114,8 +116,11 @@ export default class Level {
     }
 
     drawBackground(ctx){
-        //receives canvas context, draws background
-        ctx.drawImage(this.backgroundImage, 0, 0);
+        //receives canvas context, draws background twice to maintain infinte scrolling effect
+        this.backgroundX--;
+        if (Math.abs(this.backgroundX) >= this.dimensions.width) this.backgroundX = 0;
+        ctx.drawImage(this.backgroundImage, this.backgroundX, 0);
+        ctx.drawImage(this.backgroundImage, this.backgroundX + this.dimensions.width, 0);
     }
 
     drawForeground(ctx){

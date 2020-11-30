@@ -21,7 +21,8 @@ header p{
 .mainScreen{
     position: relative;
     height: 480px;
-    width: 480px;
+    width: 300px;
+    overflow: hidden;
 }
 
 .startButton {
