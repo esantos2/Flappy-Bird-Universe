@@ -24,7 +24,7 @@ const allCharInfo = {
         link: "assets/images/NyanCat.png",        // 65x40
         width: 65,
         height: 40,
-        callback: null
+        callback: (ctx, loc, metaData) => trailRainbow(ctx, loc, metaData)
     },
     [ANGRY_BIRD]: {
         link: "assets/images/angryBird.png",      // 50x46
@@ -69,25 +69,39 @@ export const getCharDetails = name => {
     return allCharInfo[name];
 }
 
-//callback effects
-let motionTrailLength = 30;
-let opacity = 0;
-let rainbowColors = ["255,0,0", "255,153,0", "255,255,0", "0,255,0", "0,102,255", "153,0,255"];
+const trailRainbow = (ctx, location, pastHeights) => {
+    //receives canvas context and player location object
+    //draws rainbow trail behind the character image on the canvas
+    const [x, y] = location;
+    const xStartBuffer = 15;
+    let xWalker = x + xStartBuffer;
+    
+    //callback effects
+    const rainbowColors = ["255,0,0", "255,153,0", "255,255,0", "0,255,0", "0,102,255", "153,0,255"];
+    const motionTrailLength = 30;
+    const colorHeight = 6;
+    const colorWidth = 4;
+    let opacity = 0;
+    let temp = 0;
+    
+    //maintain array of past heights
+    if (pastHeights.length >= motionTrailLength) temp = pastHeights.shift();
+    pastHeights.push(y);
 
-function trailRainbow(){
-    let xPos = player.x;
-    for (let i = pastPosition.length - 1; i >=0 ; i--){ //draw trail length
-        let colorStream = 0;
-        opacity = (i + 1)/30;
-        //opacity = ((i + 1)/(pastPosition.length));
-        for (let j = 0; j < rainbowColors.length; j++){ //draw trail slice
+    //draw trail length
+    for (let i = pastHeights.length - 1; i >= 0; i--){
+        let colorLevel = 0;
+        opacity = (i + 1) / motionTrailLength;
+        
+        //draw all colors in trail slice
+        for (let j = 0; j < rainbowColors.length; j++){ 
             ctx.beginPath();
-            ctx.fillStyle = "rgba(" + rainbowColors[j] + ","+ opacity + ")";
-            ctx.fillRect(xPos + 15, pastPosition[i].y + colorStream, 3, 6);
+            ctx.fillStyle = `rgba(${rainbowColors[j]},${opacity})`;
+            ctx.fillRect(xWalker, pastHeights[i] + colorLevel, colorWidth, colorHeight);
             ctx.fill();
-            colorStream += 6;
+            colorLevel += colorHeight;
         }
-        xPos -=3;
+        xWalker -= colorWidth;
     }
 }
 
