@@ -62,7 +62,8 @@ export default class Toolbox{
 
     drawFPS(ctx){
         //receives canvas context, prints current frames per second
-        ctx.font = "18px Helvetica"
+        ctx.font = "18px Helvetica";
+        ctx.fillStyle = "black";
         ctx.fillText("FPS : " + this.getFPS(), CONSTANTS.FPS_CORNER.x, CONSTANTS.FPS_CORNER.y);
     }
 
