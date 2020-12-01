@@ -13,6 +13,8 @@ export default class Player {
         this.x = this.dimensions.width / 3;
         this.y = 0;
         this.velocity = 0;
+        this.callback = charDetails.callback;
+        this.metaData = []; //general purpose storage helper for character trail callbacks
     }
 
     getImage(link){
@@ -34,6 +36,8 @@ export default class Player {
 
     drawPlayer(ctx){
         //receives canvas context, draws player
+        const loc = [this.x, this.y];
+        if (this.callback) this.callback(ctx, loc, this.metaData);
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
