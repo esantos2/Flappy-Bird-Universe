@@ -28,6 +28,7 @@ export default class Toolbox{
         //receives container element, adds button to add FPS counter onto canvas
         const newButton = this._createFpsButton();
         container.appendChild(newButton);
+        this.toggleSelectedStatus(newButton);
     }
 
     _addVolumeButton(container){
@@ -42,7 +43,7 @@ export default class Toolbox{
 
     toggleSelectedStatus(element){
         //receives element, toggles css class to indicate button is activated/deactivated
-
+        element.id = (element.id && element.id !== "button-on") ? "button-on" : "button-off";
     }
 
     /***************************FPS counter *******************************/
@@ -70,7 +71,7 @@ export default class Toolbox{
     _createFpsButton(){
         //creates and returns button to toggle fps counter
         const newButton = document.createElement("button");
-        newButton.innerHTML = "Toggle FPS"
+        newButton.innerHTML = "FPS"
         newButton.addEventListener("click", this._handleFpsClick());
         return newButton;
     }
@@ -80,7 +81,8 @@ export default class Toolbox{
             e.preventDefault();
             const fpsButton = e.target;
             this.showFPS = !this.showFPS;
-            
+            //change styling to indicate button is selected
+            this.toggleSelectedStatus(fpsButton);
         }
     }
 

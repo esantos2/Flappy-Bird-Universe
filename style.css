@@ -205,6 +205,40 @@ canvas{
     bottom: 400px;
 }
 
+.toolbox button{
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    width: 75px;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+}
+
+.toolbox button:hover{
+    cursor: pointer;
+}
+
+#button-on{
+    background: rgb(0, 212, 71);
+    border: 3px solid rgb(0, 0, 0);
+}
+
+#button-on:hover{
+    color: white;
+    border-color: white;
+}
+
+#button-off {
+    background: rgb(0, 112, 37);
+    color: black;
+    border: 3px solid rgb(0, 0, 0);
+}
+
+#button-off:hover{
+    color: white;
+    border-color: white;
+}
 
 @keyframes fadeIn{
     0% {opacity: 0;}
