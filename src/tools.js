@@ -33,7 +33,9 @@ export default class Toolbox{
 
     _addVolumeButton(container){
         //receives container element, adds button to adjust and/or mute game volume
-
+        const newButton = this._createAudioButton();
+        container.appendChild(newButton);
+        // this.toggleSelectedStatus(newButton);
     }
 
     _addTutorialButton(container){
@@ -90,21 +92,19 @@ export default class Toolbox{
 
     _createAudioButton(){
         //creates and return button to toggle audio controls
-            //toggle mute on click, hover reveals volume slider
-        let findAudio = document.querySelector("audio");
-        if (findAudio) document.body.removeChild(findAudio);
-        let bgAudio = document.createElement("audio");
+        const bgAudio = document.createElement("audio");
         bgAudio.autoplay = true;
         bgAudio.loop = true;
         bgAudio.controls = true;
-        bgAudio.volume = 0.3;
-    
-        let bgSource = document.createElement("source");
+        bgAudio.volume = 0.05;
+        
+        //attach default audio
+        const bgSource = document.createElement("source");
         bgSource.src = "assets/audio/rick_astley.mp3";
         bgSource.type = "audio/mp3";
-        
         bgAudio.appendChild(bgSource);
-        document.body.appendChild(bgAudio);
+
+        return bgAudio;
     }
 
     /*************************Tutorial screen *****************************/
