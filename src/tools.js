@@ -95,7 +95,7 @@ export default class Toolbox{
         const bgAudio = document.createElement("audio");
         bgAudio.autoplay = true;
         bgAudio.loop = true;
-        bgAudio.controls = true;
+        // bgAudio.controls = true;
         bgAudio.volume = 0.05;
         
         //attach default audio
