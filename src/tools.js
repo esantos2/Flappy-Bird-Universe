@@ -99,12 +99,18 @@ export default class Toolbox{
         bgAudio.volume = 0.05;
         
         //attach default audio
-        const bgSource = document.createElement("source");
-        bgSource.src = "assets/audio/rick_astley.mp3";
-        bgSource.type = "audio/mp3";
-        bgAudio.appendChild(bgSource);
+        const defaultAudioSource = "assets/audio/rick_astley.mp3";
+        this._addAudioSource(bgAudio, defaultAudioSource);
 
         return bgAudio;
+    }
+
+    _addAudioSource(bgAudio, sourcePath){
+        //receives audio element and a url path string, sets string as the audio element source
+        const bgSource = document.createElement("source");
+        bgSource.src = sourcePath;
+        bgSource.type = "audio/mp3";
+        bgAudio.appendChild(bgSource);
     }
 
     /*************************Tutorial screen *****************************/
