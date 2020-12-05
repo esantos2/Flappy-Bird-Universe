@@ -113,6 +113,27 @@ export default class Toolbox{
         bgAudio.appendChild(bgSource);
     }
 
+    toggleMute(){
+        //toggles audio mute
+        return (e) => {
+            e.preventDefault();
+            const muteButton = e.target;
+            muteButton.muted = !muteButton.muted;
+        }
+    }
+
+    toggleVolumeSlider(){
+        //toggles volume slider visibility
+        return () => {
+            const volSlider = document.querySelector(".vol-slider");
+            if (volSlider.id !== "slide-in"){
+                volSlider.setAttribute("id", "slide-in");
+            } else {
+                volSlider.setAttribute("id", "slide-out")
+            }
+        }
+    }
+
     /*************************Tutorial screen *****************************/
 
     _createTutorialButton(){
