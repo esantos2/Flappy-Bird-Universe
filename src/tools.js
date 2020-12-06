@@ -11,7 +11,6 @@ export default class Toolbox{
         this.addToolsToGame();
         this.startTime = 0;
         this.frameNumber = 0;
-        this.audioElement = null;
         this.showFPS = false;
         this.showAudio = false;
         this.showTutorial = false;
@@ -38,7 +37,6 @@ export default class Toolbox{
         const volSlider = this._createVolumeSlider();
         container.appendChild(audioElement);
         container.appendChild(volSlider);
-        this.audioElement = audioElement;
         // this.toggleSelectedStatus(audioElement);
     }
 
@@ -98,43 +96,44 @@ export default class Toolbox{
         //creates and return button to toggle audio controls
 
         //set default audio properties
-        const bgAudio = document.createElement("audio");
-        bgAudio.autoplay = true;
-        bgAudio.loop = true;
-        bgAudio.volume = 0.05;
+        const audioElement = document.createElement("audio");
+        audioElement.autoplay = true;
+        audioElement.loop = true;
+        audioElement.volume = 0.05;
         
         //add default audio
         const defaultAudioSource = "assets/audio/rick_astley.mp3";
-        this._addAudioSource(bgAudio, defaultAudioSource);        
+        this._addAudioSource(audioElement, defaultAudioSource);        
 
         //add event listeners
         //mute on click
         //reveal volume slider on hover
+        this.audioElement = audioElement;
 
-        return bgAudio;
+        return audioElement;
     }
 
     _createVolumeSlider(){
-       //create volume slider
-       const sliderSettings = {
-           class: "vol-slider",
-           type: "range",
-           min: "0",
-           max: "100",
-           value: "100",
-           step: "1"
-       };
-       const volSlider = document.createElement("input");
-       
-       //apply default slider settings
-       Object.keys(sliderSettings).forEach( attribute => {
-           volSlider.setAttribute(attribute, sliderSettings[attribute]);
-       })
+        //create volume slider
+        const sliderSettings = {
+            class: "vol-slider",
+            type: "range",
+            min: "0",
+            max: "100",
+            value: "100",
+            step: "1"
+        };
+        const volSlider = document.createElement("input");
+        
+        //apply default slider settings
+        Object.keys(sliderSettings).forEach( attribute => {
+            volSlider.setAttribute(attribute, sliderSettings[attribute]);
+        })
 
-       //add event listener to change volume
-       volSlider.addEventListener("change", () => console.log(volSlider.value));
+        //add event listener to change volume
+        volSlider.addEventListener("change", this.setVolume(volSlider.value));
 
-       return volSlider;
+        return volSlider;
     }
 
     _addAudioSource(bgAudio, sourcePath){
@@ -170,7 +169,9 @@ export default class Toolbox{
         //sets audio volume to the selected range value
         return (e) => {
             e.preventDefault();
-            this.audioElement.volume = val / 100;
+            const chosenVal = e.target.value;
+            this.audioElement.volume = chosenVal / 100;
+            console.log("New volume: ", this.audioElement.volume)
         }
     }
 
