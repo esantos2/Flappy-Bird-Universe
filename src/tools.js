@@ -11,6 +11,7 @@ export default class Toolbox{
         this.addToolsToGame();
         this.startTime = 0;
         this.frameNumber = 0;
+        this.audioElement = null;
         this.showFPS = false;
         this.showAudio = false;
         this.showTutorial = false;
@@ -33,11 +34,12 @@ export default class Toolbox{
 
     _addVolumeButton(container){
         //receives container element, adds button to adjust and/or mute game volume
-        const newButton = this._createAudioButton();
+        const audioElement = this._createAudioButton();
         const volSlider = this._createVolumeSlider();
-        container.appendChild(newButton);
+        container.appendChild(audioElement);
         container.appendChild(volSlider);
-        // this.toggleSelectedStatus(newButton);
+        this.audioElement = audioElement;
+        // this.toggleSelectedStatus(audioElement);
     }
 
     _addTutorialButton(container){
@@ -131,7 +133,7 @@ export default class Toolbox{
 
        //add event listener to change volume
        volSlider.addEventListener("change", () => console.log(volSlider.value));
-       
+
        return volSlider;
     }
 
@@ -164,10 +166,11 @@ export default class Toolbox{
         }
     }
 
-    setVolume(){
+    setVolume(val){
         //sets audio volume to the selected range value
         return (e) => {
-
+            e.preventDefault();
+            this.audioElement.volume = val / 100;
         }
     }
 
