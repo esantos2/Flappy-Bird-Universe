@@ -60,10 +60,12 @@ export default class Game {
     }
 
     handleStartButton(){
+        //closes start screen, opens character selection, plays background music
         return (e) => {
             e.preventDefault();
             this._toggleVisibility(document.querySelector(".startButton"));
             this.toggleCharacterSelectionScreen();
+            document.getElementById("audio").play();
         }
     }
 
