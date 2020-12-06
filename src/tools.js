@@ -34,7 +34,9 @@ export default class Toolbox{
     _addVolumeButton(container){
         //receives container element, adds button to adjust and/or mute game volume
         const newButton = this._createAudioButton();
+        const volSlider = this._createVolumeSlider();
         container.appendChild(newButton);
+        container.appendChild(volSlider);
         // this.toggleSelectedStatus(newButton);
     }
 
@@ -92,17 +94,45 @@ export default class Toolbox{
 
     _createAudioButton(){
         //creates and return button to toggle audio controls
+
+        //set default audio properties
         const bgAudio = document.createElement("audio");
         bgAudio.autoplay = true;
         bgAudio.loop = true;
-        // bgAudio.controls = true;
         bgAudio.volume = 0.05;
         
-        //attach default audio
+        //add default audio
         const defaultAudioSource = "assets/audio/rick_astley.mp3";
-        this._addAudioSource(bgAudio, defaultAudioSource);
+        this._addAudioSource(bgAudio, defaultAudioSource);        
+
+        //add event listeners
+        //mute on click
+        //reveal volume slider on hover
 
         return bgAudio;
+    }
+
+    _createVolumeSlider(){
+       //create volume slider
+       const sliderSettings = {
+           class: "vol-slider",
+           type: "range",
+           min: "0",
+           max: "100",
+           value: "100",
+           step: "1"
+       };
+       const volSlider = document.createElement("input");
+       
+       //apply default slider settings
+       Object.keys(sliderSettings).forEach( attribute => {
+           volSlider.setAttribute(attribute, sliderSettings[attribute]);
+       })
+
+       //add event listener to change volume
+       volSlider.addEventListener("change", () => console.log(volSlider.value));
+       
+       return volSlider;
     }
 
     _addAudioSource(bgAudio, sourcePath){
@@ -131,6 +161,13 @@ export default class Toolbox{
             } else {
                 volSlider.setAttribute("id", "slide-out")
             }
+        }
+    }
+
+    setVolume(){
+        //sets audio volume to the selected range value
+        return (e) => {
+
         }
     }
 
