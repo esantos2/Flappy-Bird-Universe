@@ -1,4 +1,5 @@
 const CONSTANTS = {
+    INITIAL_VOLUME: 0.05,
     FPS_CORNER: {
         x: 10,
         y: 20
@@ -95,22 +96,30 @@ export default class Toolbox{
     _createAudioButton(){
         //creates and return button to toggle audio controls
 
-        //set default audio properties
+        //create audio element
         const audioElement = document.createElement("audio");
-        audioElement.autoplay = true;
-        audioElement.loop = true;
-        audioElement.volume = 0.05;
-        
+        audioElement.setAttribute("id", "audio");
+
         //add default audio
         const defaultAudioSource = "assets/audio/rick_astley.mp3";
         this._addAudioSource(audioElement, defaultAudioSource);        
-
-        //add event listeners
-        //mute on click
-        //reveal volume slider on hover
+        
+        //set default audio properties        
+        audioElement.autoplay = true;
+        audioElement.loop = true;
+        audioElement.volume = CONSTANTS.INITIAL_VOLUME;
+        
         this.audioElement = audioElement;
 
         return audioElement;
+    }
+
+    _addAudioSource(bgAudio, sourcePath){
+        //receives audio element and a url path string, sets string as the audio element source
+        const bgSource = document.createElement("source");
+        bgSource.src = sourcePath;
+        bgSource.type = "audio/mp3";
+        bgAudio.appendChild(bgSource);
     }
 
     _createVolumeSlider(){
@@ -118,10 +127,10 @@ export default class Toolbox{
         const sliderSettings = {
             class: "vol-slider",
             type: "range",
-            min: "0",
-            max: "100",
-            value: "100",
-            step: "1"
+            min: 0,
+            max: 0.1,
+            step: 0.001,
+            value: CONSTANTS.INITIAL_VOLUME,
         };
         const volSlider = document.createElement("input");
         
@@ -134,23 +143,6 @@ export default class Toolbox{
         volSlider.addEventListener("change", this.setVolume(volSlider.value));
 
         return volSlider;
-    }
-
-    _addAudioSource(bgAudio, sourcePath){
-        //receives audio element and a url path string, sets string as the audio element source
-        const bgSource = document.createElement("source");
-        bgSource.src = sourcePath;
-        bgSource.type = "audio/mp3";
-        bgAudio.appendChild(bgSource);
-    }
-
-    toggleMute(){
-        //toggles audio mute
-        return (e) => {
-            e.preventDefault();
-            const muteButton = e.target;
-            muteButton.muted = !muteButton.muted;
-        }
     }
 
     toggleVolumeSlider(){
@@ -170,7 +162,7 @@ export default class Toolbox{
         return (e) => {
             e.preventDefault();
             const chosenVal = e.target.value;
-            this.audioElement.volume = chosenVal / 100;
+            this.audioElement.volume = chosenVal;
             console.log("New volume: ", this.audioElement.volume)
         }
     }
