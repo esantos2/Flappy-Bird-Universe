@@ -244,18 +244,23 @@ canvas{
     border-color: white;
 }
 
+.audio-controls{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .vol-slider{
-    opacity: 0;
+    position: absolute;
+    width: 0px;
+    left: 60px;
+    transition: 100ms;
 }
 
 #slide-in{
-    animation: slide-in 500ms;
-    -webkit-animation: slide-in 500ms;
-}
-
-#slide-out{
-    animation: slide-out 500ms;
-    -webkit-animation: slide-out 500ms;
+    width: 100px;
+    left: 75px;
 }
 
 @keyframes fadeIn{
@@ -266,40 +271,4 @@ canvas{
 @-webkit-keyframes fadeIn{
     0% {opacity: 0;}
     100% {opacity: 1;}
-}
-
-@keyframes slide-in{
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes slide-in{
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes slide-out{
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-@-webkit-keyframes slide-out{
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
 }

@@ -44,10 +44,8 @@ export default class Toolbox{
         //receives container element, adds button to adjust and/or mute game volume
         const audioElement = this._createAudioElement();
         const muteButton = this._createMuteButton();
-        const volSlider = this._createVolumeSlider();
         container.appendChild(audioElement);
         container.appendChild(muteButton);
-        container.appendChild(volSlider);
         // this.toggleSelectedStatus(audioElement);
     }
 
@@ -133,6 +131,12 @@ export default class Toolbox{
 
     _createMuteButton(){
         //creates mute button for audio element
+        
+        //create container for button and slider
+        const container = document.createElement("div");
+        container.setAttribute("class", "audio-controls");
+
+        //create button
         const muteButton = document.createElement("button");
         muteButton.setAttribute("id", "mute-button");
         
@@ -142,10 +146,17 @@ export default class Toolbox{
 
         //add event listeners for mute and volume controls
         muteButton.addEventListener("click", this.toggleMute(muteButton));
-        muteButton.addEventListener("mouseover", this.toggleVolumeSlider());
-        muteButton.addEventListener("mouseout", this.toggleVolumeSlider());
+        container.addEventListener("mouseover", this.toggleVolumeSlider());
+        container.addEventListener("mouseout", this.toggleVolumeSlider());
 
-        return muteButton;
+        //add volume slider to mute button element
+        const volSlider = this._createVolumeSlider();
+        
+        //add button and slider to container
+        container.appendChild(muteButton);
+        container.appendChild(volSlider);
+
+        return container;
     }
 
     _createVolumeSlider(){
@@ -170,7 +181,7 @@ export default class Toolbox{
             if (volSlider.id !== "slide-in"){
                 volSlider.setAttribute("id", "slide-in");
             } else {
-                volSlider.setAttribute("id", "slide-out")
+                volSlider.removeAttribute("id", "slide-in")
             }
         }
     }
