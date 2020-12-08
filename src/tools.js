@@ -134,6 +134,7 @@ export default class Toolbox{
     _createMuteButton(){
         //creates mute button for audio element
         const muteButton = document.createElement("button");
+        muteButton.setAttribute("id", "mute-button");
         
         //create default button icon
         muteButton.innerHTML = "OFF";
@@ -197,6 +198,12 @@ export default class Toolbox{
             this.audioElement.volume = chosenVal;
             console.log("New volume: ", this.audioElement.volume)
         }
+    }
+
+    startMusic(){
+        //unmutes audio and updates mute button text
+        document.getElementById("audio").play();
+        document.getElementById("mute-button").innerHTML = "ON";
     }
 
     /*************************Tutorial screen *****************************/
