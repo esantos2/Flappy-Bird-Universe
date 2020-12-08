@@ -1,9 +1,17 @@
 const CONSTANTS = {
-    INITIAL_VOLUME: 0.05,
     FPS_CORNER: {
         x: 10,
         y: 20
-    }
+    },
+    VOL_SLIDER_SETTINGS: {
+        class: "vol-slider",
+        type: "range",
+        min: 0,
+        max: 0.1,
+        step: 0.001,
+        value: 0.05
+    },
+    DEFAULT_AUDIO_SRC: "assets/audio/rick_astley.mp3"
 };
 
 export default class Toolbox{
@@ -103,13 +111,13 @@ export default class Toolbox{
         audioElement.setAttribute("id", "audio");
 
         //add default audio
-        const defaultAudioSource = "assets/audio/rick_astley.mp3";
+        const defaultAudioSource = CONSTANTS.DEFAULT_AUDIO_SRC;
         this._addAudioSource(audioElement, defaultAudioSource);        
         
         //set default audio properties        
         audioElement.autoplay = true;
         audioElement.loop = true;
-        audioElement.volume = CONSTANTS.INITIAL_VOLUME;
+        audioElement.volume = CONSTANTS.VOL_SLIDER_SETTINGS.value;
         this.audioElement = audioElement;
 
         return audioElement;
@@ -141,19 +149,11 @@ export default class Toolbox{
 
     _createVolumeSlider(){
         //create volume slider
-        const sliderSettings = {
-            class: "vol-slider",
-            type: "range",
-            min: 0,
-            max: 0.1,
-            step: 0.001,
-            value: CONSTANTS.INITIAL_VOLUME,
-        };
         const volSlider = document.createElement("input");
         
         //apply default slider settings
-        Object.keys(sliderSettings).forEach( attribute => {
-            volSlider.setAttribute(attribute, sliderSettings[attribute]);
+        Object.keys(CONSTANTS.VOL_SLIDER_SETTINGS).forEach( attribute => {
+            volSlider.setAttribute(attribute, CONSTANTS.VOL_SLIDER_SETTINGS[attribute]);
         })
 
         //add event listener to change volume
