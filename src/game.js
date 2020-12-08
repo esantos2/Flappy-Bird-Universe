@@ -182,7 +182,7 @@ export default class Game {
         this.player.animate(this.ctx);
 
         //draw fps counter if activated
-        if (this.tools.showFPS) this.tools.drawFPS(this.ctx);
+        if (this.tools.frameCounter.showFPS) this.tools.frameCounter.drawFPS(this.ctx);
 
         //check for collisions, end game if player hits pipe
         if (this.gameOver()){
