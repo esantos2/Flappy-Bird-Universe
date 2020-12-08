@@ -65,7 +65,7 @@ export default class Game {
             e.preventDefault();
             this._toggleVisibility(document.querySelector(".startButton"));
             this.toggleCharacterSelectionScreen();
-            this.tools.startMusic();
+            this.tools.audio.startMusic();
         }
     }
 
