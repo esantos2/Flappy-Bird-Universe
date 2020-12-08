@@ -78,7 +78,7 @@ const trailRainbow = (ctx, location, pastHeights) => {
     
     //callback effects
     const rainbowColors = ["255,0,0", "255,153,0", "255,255,0", "0,255,0", "0,102,255", "153,0,255"];
-    const motionTrailLength = 30;
+    const motionTrailLength = 50;
     const colorHeight = 6;
     const colorWidth = 4;
     let opacity = 0;
