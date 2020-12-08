@@ -1,7 +1,7 @@
 import Player from "./player";
 import Level from "./level";
 import * as CHAR_INFO from "./character_info";
-import Toolbox from "./tools";
+import Toolbox from "./toolbox";
 
 export default class Game {
     constructor(canvas){
