@@ -219,6 +219,10 @@ canvas{
     cursor: pointer;
 }
 
+.toolbox button #icon{
+    background-color: darkred;
+}
+
 #button-on{
     background: rgb(0, 212, 71);
     border: 3px solid rgb(0, 0, 0);
@@ -246,6 +250,26 @@ canvas{
 }
 
 @-webkit-keyframes fadeIn{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes slide-in{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@-webkit-keyframes slide-in{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes slide-out{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@-webkit-keyframes slide-out{
     0% {opacity: 0;}
     100% {opacity: 1;}
 }

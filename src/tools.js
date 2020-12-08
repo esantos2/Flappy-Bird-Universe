@@ -34,9 +34,11 @@ export default class Toolbox{
 
     _addVolumeButton(container){
         //receives container element, adds button to adjust and/or mute game volume
-        const audioElement = this._createAudioButton();
+        const audioElement = this._createAudioElement();
+        const muteButton = this._createMuteButton();
         const volSlider = this._createVolumeSlider();
         container.appendChild(audioElement);
+        container.appendChild(muteButton);
         container.appendChild(volSlider);
         // this.toggleSelectedStatus(audioElement);
     }
@@ -93,7 +95,7 @@ export default class Toolbox{
 
     /******************************Audio **********************************/
 
-    _createAudioButton(){
+    _createAudioElement(){
         //creates and return button to toggle audio controls
 
         //create audio element
@@ -108,7 +110,6 @@ export default class Toolbox{
         audioElement.autoplay = true;
         audioElement.loop = true;
         audioElement.volume = CONSTANTS.INITIAL_VOLUME;
-        
         this.audioElement = audioElement;
 
         return audioElement;
@@ -120,6 +121,22 @@ export default class Toolbox{
         bgSource.src = sourcePath;
         bgSource.type = "audio/mp3";
         bgAudio.appendChild(bgSource);
+    }
+
+    _createMuteButton(){
+        //creates mute button for audio element
+        const muteButton = document.createElement("button");
+        
+        //create default button icon
+        muteButton.innerHTML = "OFF";
+        // muteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+
+        //add event listeners for mute and volume controls
+        muteButton.addEventListener("click", this.toggleMute(muteButton));
+        muteButton.addEventListener("mouseover", this.toggleVolumeSlider());
+        muteButton.addEventListener("mouseout", this.toggleVolumeSlider());
+
+        return muteButton;
     }
 
     _createVolumeSlider(){
@@ -154,6 +171,21 @@ export default class Toolbox{
             } else {
                 volSlider.setAttribute("id", "slide-out")
             }
+        }
+    }
+
+    toggleMute(muteButton){
+        //toggles audio muted status
+        return (e) => {
+            e.preventDefault();
+            if (this.audioElement.muted){
+                this.audioElement.muted = false;
+                muteButton.innerHTML = "ON"
+            } else {
+                this.audioElement.muted = true;
+                muteButton.innerHTML = "OFF"
+            }
+
         }
     }
 
