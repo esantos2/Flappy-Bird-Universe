@@ -21,7 +21,7 @@ header p{
 .mainScreen{
     position: relative;
     height: 480px;
-    width: 300px;
+    width: 480px;
     overflow: hidden;
 }
 
@@ -201,8 +201,8 @@ canvas{
 
 .toolbox{
     position: absolute;
-    left: 150px;
-    bottom: 400px;
+    left: 242px;
+    bottom: 397px;
 }
 
 .toolbox button{
