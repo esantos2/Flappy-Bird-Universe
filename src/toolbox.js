@@ -8,16 +8,4 @@ export default class Toolbox{
         this.frameCounter = new FrameCounter(toolBoxContainer);
         this.audio = new GameAudio(toolBoxContainer);
     }
-
-    _addTutorialButton(container){
-        //receives container element, adds button that toggles tutorial modal
-
-    }
-
-    /*************************Tutorial screen *****************************/
-
-    _createTutorialButton(){
-        //creates and returns button to toggle tutorial modal
-
-    }
 }
