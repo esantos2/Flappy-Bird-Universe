@@ -251,11 +251,16 @@ canvas{
     align-items: center;
 }
 
+#mute-button{
+    z-index: 20;
+}
+
 .vol-slider{
     position: absolute;
+    z-index: 10;
     width: 0px;
     left: 60px;
-    transition: 100ms;
+    transition: 200ms;
 }
 
 #slide-in{

@@ -181,7 +181,7 @@ export default class Toolbox{
             if (volSlider.id !== "slide-in"){
                 volSlider.setAttribute("id", "slide-in");
             } else {
-                volSlider.removeAttribute("id", "slide-in")
+                volSlider.removeAttribute("id", "slide-in");
             }
         }
     }
