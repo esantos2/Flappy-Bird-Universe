@@ -7,22 +7,25 @@ const CONSTANTS = {
         step: 0.001,
         value: 0.05
     },
-    DEFAULT_AUDIO_SRC: "assets/audio/rick_astley.mp3"
+    DEFAULT_AUDIO_SRC: "assets/audio/rick_astley.mp3",
+    ICON_MUTE: '<i class="fas fa-volume-mute"></i>',
+    ICON_VOL_OFF: '<i class="fas fa-volume-off"></i>',
+    ICON_VOL_LOW: '<i class="fas fa-volume-down"></i>',
+    ICON_VOL_HIGH: '<i class="fas fa-volume-up"></i>'
 };
 
 export default class GameAudio {
     constructor(container){
-        this.toolbox = container;               //parent container element for all tools
-        this.button = this.addVolumeControls(); //create and add audio element and button to toolbox
-        this.showSlider = false;                //tracks visibility
+        this.toolbox = container;       //parent container element for all tools
+        this.addVolumeControls();       //create and add audio element and button to toolbox
     }
 
     addVolumeControls(){
         //adds button to adjust and/or mute game volume
         const audioElement = this._createAudioElement();
-        const muteButton = this._createMuteButton();
+        const volContainer = this._createVolControls();
         this.toolbox.appendChild(audioElement);
-        this.toolbox.appendChild(muteButton);
+        this.toolbox.appendChild(volContainer);
     }
 
     _createAudioElement(){
@@ -40,6 +43,8 @@ export default class GameAudio {
         audioElement.autoplay = true;
         audioElement.loop = true;
         audioElement.volume = CONSTANTS.VOL_SLIDER_SETTINGS.value;
+        
+        //instance variable for audio element reference
         this.audioElement = audioElement;
 
         return audioElement;
@@ -53,8 +58,8 @@ export default class GameAudio {
         bgAudio.appendChild(bgSource);
     }
 
-    _createMuteButton(){
-        //creates mute button for audio element
+    _createVolControls(){
+        //creates mute button and volume slider for audio element, returns the volume controls container element
         
         //create container for button and slider
         const container = document.createElement("div");
@@ -63,17 +68,20 @@ export default class GameAudio {
         //create button
         const muteButton = document.createElement("button");
         muteButton.setAttribute("id", "mute-button");
+
+        //instance variable for mute button reference
+        this.muteButton = muteButton;
         
         //create default button icon
-        muteButton.innerHTML = "OFF";
-
-        //add event listeners for mute and volume controls
-        muteButton.addEventListener("click", this.toggleMute(muteButton));
-        container.addEventListener("mouseover", this.toggleVolumeSlider());
-        container.addEventListener("mouseout", this.toggleVolumeSlider());
+        muteButton.innerHTML = CONSTANTS.ICON_VOL_OFF;
 
         //add volume slider to mute button element
         const volSlider = this._createVolumeSlider();
+
+        //add event listeners for mute and volume controls
+        muteButton.addEventListener("click", this.toggleMute());
+        container.addEventListener("mouseover", this.showVolumeSlider(volSlider));
+        container.addEventListener("mouseout", this.hideVolumeSlider(volSlider));
         
         //add button and slider to container
         container.appendChild(muteButton);
@@ -97,28 +105,30 @@ export default class GameAudio {
         return volSlider;
     }
 
-    toggleVolumeSlider(){
-        //toggles volume slider visibility
+    showVolumeSlider(volSlider){
+        //receives volume slider element, adds attribute for slide animation
         return () => {
-            const volSlider = document.querySelector(".vol-slider");
-            if (volSlider.id !== "slide-in"){
-                volSlider.setAttribute("id", "slide-in");
-            } else {
-                volSlider.removeAttribute("id", "slide-in");
-            }
+            volSlider.setAttribute("id", "slide-in");
         }
     }
 
-    toggleMute(muteButton){
+    hideVolumeSlider(volSlider){
+        //receives volume slider element, removes attribute for slide animation
+        return () => {
+            volSlider.removeAttribute("id", "slide-in");
+        }
+    }
+
+    toggleMute(){
         //toggles audio muted status
         return (e) => {
             e.preventDefault();
             if (this.audioElement.muted){
                 this.audioElement.muted = false;
-                muteButton.innerHTML = "ON"
+                this.setButtonIcon(this.audioElement.volume);
             } else {
                 this.audioElement.muted = true;
-                muteButton.innerHTML = "OFF"
+                this.setButtonIcon(0);
             }
         }
     }
@@ -129,12 +139,34 @@ export default class GameAudio {
             e.preventDefault();
             const chosenVal = e.target.value;
             this.audioElement.volume = chosenVal;
+            this.setButtonIcon(chosenVal);
         }
+    }
+
+    setButtonIcon(currentVol){
+        //receives current volume level, calls getVolIcon and sets button icon based on volume level
+        const volIcon = this.getVolIcon(currentVol);
+        this.muteButton.innerHTML = volIcon;
+    }
+
+    getVolIcon(currentVol){
+        //receives current volume level, returns the icon element string corresponding to the current volume level
+        let volIcon = '';
+        if (this.audioElement.muted){                                       //muted
+            volIcon = CONSTANTS.ICON_MUTE;
+        } else if (currentVol === 0){                                       //off
+            volIcon = CONSTANTS.ICON_VOL_OFF;
+        } else if (currentVol < (CONSTANTS.VOL_SLIDER_SETTINGS.max / 2)){   //low vol
+            volIcon = CONSTANTS.ICON_VOL_LOW;
+        } else {                                                            //high vol
+            volIcon = CONSTANTS.ICON_VOL_HIGH;
+        }
+        return volIcon;
     }
 
     startMusic(){
         //unmutes audio and updates mute button text
-        document.getElementById("audio").play();
-        document.getElementById("mute-button").innerHTML = "ON";
+        this.audioElement.play();
+        this.setButtonIcon(this.audioElement.volume);
     }
 }
