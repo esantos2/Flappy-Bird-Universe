@@ -219,8 +219,9 @@ canvas{
     cursor: pointer;
 }
 
-.toolbox button #icon{
-    background-color: darkred;
+.toolbox > button{
+    position: relative;
+    z-index: 20;
 }
 
 #button-on{
@@ -263,9 +264,22 @@ canvas{
     transition: 200ms;
 }
 
+.fps-status{
+    position: absolute;
+    opacity: 0;
+    width: 170px;
+    left: 75px;
+    bottom: 55px;
+    transition: 200ms;
+}
+
 #slide-in{
     width: 100px;
     left: 75px;
+}
+
+#show-status{
+    opacity: 1;
 }
 
 @keyframes fadeIn{
