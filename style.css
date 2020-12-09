@@ -260,7 +260,7 @@ canvas{
     position: absolute;
     z-index: 10;
     width: 0px;
-    left: 60px;
+    left: 40px;
     transition: 200ms;
 }
 
