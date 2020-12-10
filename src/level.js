@@ -5,16 +5,19 @@ const CONSTANTS = {
     EDGE_BUFFER: 50,
     PIPE_SPEED: 2,
     FOREGROUND_HEIGHT: 30,
-    PIPE_IMAGE_HEIGHT: 480
+    PIPE_IMAGE_HEIGHT: 480,
+    DEFAULT_IMAGES: {
+        BG: "assets/images/bgDay.png",              //600x480
+        FG: "assets/images/fgDay.png",              //480x60
+        TOP_PIPE: "assets/images/pipesTop2.png",    //52x480
+        BTM_PIPE: "assets/images/pipesBtm2.png"     //52x480
+    }
 };
 
 export default class Level {
     constructor(dimensions){
         this.dimensions = dimensions;
-        this.backgroundImage = this.getImage("assets/images/bgDay.png");  // 600x480
-        this.foregroundImage = this.getImage("assets/images/fgDay.png");  // 480x60
-        this.topPipeImage = this.getImage("assets/images/pipesTop2.png"); // 52x480
-        this.btmPipeImage = this.getImage("assets/images/pipesBtm2.png"); // 52x480
+        this.setLevelAssets(CONSTANTS.DEFAULT_IMAGES);
         //pipe images
         const initialSpawn = this.dimensions.width + (60 * CONSTANTS.PIPE_SPEED);
         this.pipes = [
@@ -31,6 +34,30 @@ export default class Level {
         const newImage = new Image();
         newImage.src = link;
         return newImage;
+    }
+
+    setLevelAssets(imagePaths){
+        //receives object of image paths, sets level variables for the appropriate images
+        const {BG, FG, TOP_PIPE, BTM_PIPE} = imagePaths;
+        this.setBackgroundImage(BG);
+        this.setForegroundImage(FG);
+        this.setPipeImages(TOP_PIPE, BTM_PIPE);
+    }
+    
+    setBackgroundImage(path){
+        //receives path string and sets level background image
+        this.backgroundImage = this.getImage(path);
+    }
+
+    setForegroundImage(path){
+        //receives path string and sets level foreground image
+        this.foregroundImage = this.getImage(path);
+    }
+
+    setPipeImages(topPipePath, btmPipePath){
+        //receives paths strings for top and bottom pipes, sets images
+        this.topPipeImage = this.getImage(topPipePath);
+        this.btmPipeImage = this.getImage(btmPipePath);
     }
 
     collidesWith(birdBounds){
