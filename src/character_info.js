@@ -12,37 +12,68 @@ const allCharInfo = {
         link: "assets/images/flappyBird.png",     // 51x36
         width: 51,
         height: 36,
-        callback: null
+        callback: null,
+        levelAssets: null
     },
     [MARIO_FISH]: {
         link: "assets/images/Fish.png",           // 40x40
         width: 40,
         height: 40,
-        callback: null
+        callback: null,
+        levelAssets: {
+            BACKGROUND: "",
+            FOREGROUND: "",
+            TOP_PIPE: "",
+            BTM_PIPE: ""
+        }
     },
     [NYAN_CAT]: {
         link: "assets/images/NyanCat.png",        // 65x40
         width: 65,
         height: 40,
-        callback: (ctx, loc, metaData) => trailRainbow(ctx, loc, metaData)
+        callback: (ctx, loc, metaData) => trailRainbow(ctx, loc, metaData),
+        levelAssets: {
+            BACKGROUND: "",
+            FOREGROUND: "",
+            TOP_PIPE: "",
+            BTM_PIPE: ""
+        }
     },
     [ANGRY_BIRD]: {
         link: "assets/images/angryBird.png",      // 50x46
         width: 50,
         height: 46,
-        callback: null
+        callback: null,
+        levelAssets: {
+            BACKGROUND: "",
+            FOREGROUND: "",
+            TOP_PIPE: "",
+            BTM_PIPE: ""
+        }
     },
     [MARIO_CAPE]: {
         link: "assets/images/marioCape.png",      // 56x56
         width: 56,
         height: 56,
-        callback: null
+        callback: null,
+        levelAssets: {
+            BACKGROUND: "",
+            FOREGROUND: "",
+            TOP_PIPE: "",
+            BTM_PIPE: ""
+        }
     },
     [BANANYA_CAT]: {
         link: "assets/images/Bananya.png",        // 32x55
         width: 32,
         height: 55,
-        callback: null
+        callback: null,
+        levelAssets: {
+            BACKGROUND: "",
+            FOREGROUND: "",
+            TOP_PIPE: "",
+            BTM_PIPE: ""
+        }
     }
 }
 

@@ -7,8 +7,8 @@ const CONSTANTS = {
     FOREGROUND_HEIGHT: 30,
     PIPE_IMAGE_HEIGHT: 480,
     DEFAULT_IMAGES: {
-        BG: "assets/images/bgDay.png",              //600x480
-        FG: "assets/images/fgDay.png",              //480x60
+        BACKGROUND: "assets/images/bgDay.png",              //600x480
+        FOREGROUND: "assets/images/fgDay.png",              //480x60
         TOP_PIPE: "assets/images/pipesTop2.png",    //52x480
         BTM_PIPE: "assets/images/pipesBtm2.png"     //52x480
     }
@@ -38,9 +38,9 @@ export default class Level {
 
     setLevelAssets(imagePaths){
         //receives object of image paths, sets level variables for the appropriate images
-        const {BG, FG, TOP_PIPE, BTM_PIPE} = imagePaths;
-        this.setBackgroundImage(BG);
-        this.setForegroundImage(FG);
+        const {BACKGROUND, FOREGROUND, TOP_PIPE, BTM_PIPE} = imagePaths;
+        this.setBackgroundImage(BACKGROUND);
+        this.setForegroundImage(FOREGROUND);
         this.setPipeImages(TOP_PIPE, BTM_PIPE);
     }
     
