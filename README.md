@@ -1,7 +1,7 @@
 # Flappy Bird Universe
 Browser implementation of the classic Flappy Bird mobile game, with additional characters and features.
 
-<a href="https://arctive.github.io/Flappy-Bird-Universe/" target="_blank">Live Demo</a>
+<a href="https://esantos2.github.io/Flappy-Bird-Universe/" target="_blank">Live Demo</a>
 
 ## Technologies
 * HTML5 / CSS3 / JS
