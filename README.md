@@ -26,26 +26,55 @@ Browser implementation of the classic Flappy Bird mobile game, with additional c
   pipes are redrawn with every animation frame, allowing the obstacles to approach smoothly and consistently.
 
 ```
-  pipeLocation[i].x -= 2; //move pipes left
-  ctx.drawImage(topPipesPic, pipeLocation[i].x, 0 - (topPipesPic.height - pipeLocation[i].y));
-  ctx.drawImage(btmPipesPic, pipeLocation[i].x, pipeLocation[i].y + gapConst);
-  if (pipeLocation[i].x == 260){ 
-      spawnPipe(); //spawn new pipe
-  }
+    getRandomPipe(x){
+        //receives starting x coord, returns new pipe object
+        const heightRange = this.dimensions.height - (2 * CONSTANTS.EDGE_BUFFER) - CONSTANTS.GAP_HEIGHT;
+        const gapTop = (Math.random() * heightRange) + CONSTANTS.EDGE_BUFFER;
+        const pipe = {
+            topPipe: {
+                left: x,
+                right: x + CONSTANTS.PIPE_WIDTH,
+                top: 0,
+                bottom: gapTop
+            },
+            bottomPipe: {
+                left: x,
+                right: x + CONSTANTS.PIPE_WIDTH,
+                top: gapTop + CONSTANTS.GAP_HEIGHT,
+                bottom: this.dimensions.height
+            },
+            passed: false
+        };
+        return pipe;
+    }
 ```
 
 ### Collision detection
 * Collision detection was implemented with respect to each character's unique hitbox. Dimensions were checked against both the upper and lower pipes.
 
 ```
-  if( (((player.x <= pipeLocation[i].x && player.x + player.pWidth >= pipeLocation[i].x) //hit left half
-      || (player.x >= pipeLocation[i].x && player.x + player.pWidth <= pipeLocation[i].x + topPipesPic.width) //hit inside 
-      || (player.x <= pipeLocation[i].x + topPipesPic.width && player.x + player.pWidth >= pipeLocation[i].x + topPipesPic.width)) //hit right half
-      && (player.y <= pipeLocation[i].y || player.y + player.pHeight >= pipeLocation[i].y + gapConst))
-      || (player.y + player.pHeight >= c.height - fgHeight)){ //hit ground
-      crash = true;
-      break;
-  }
+    collidesWith(birdBounds){
+        //returns true if bird collides with any pipe, false otherwise
+        let hitDetection = false;
+        this.pipes.forEach( pipeSet => {
+            const topHit = this._overlap(pipeSet.topPipe, birdBounds);
+            const bottomHit = this._overlap(pipeSet.bottomPipe, birdBounds);
+            if (topHit || bottomHit) hitDetection = true; 
+        });
+
+        //if bird hits foreground, return true
+        const groundLevel = this.dimensions.height - CONSTANTS.FOREGROUND_HEIGHT;
+        if (birdBounds.bottom >= groundLevel) hitDetection = true;
+
+        return hitDetection;
+    }
+
+    _overlap(box1, box2){
+        //returns true if box1 overlaps with box2, false otherwise
+        if (box1.left > box2.right || box1.right < box2.left) return false; //no overlap in x direction
+        if (box1.top > box2.bottom || box1.bottom < box2.top) return false; //no overlap in y direction
+        return true;
+    }
 ```
 
 ## Coming soon
