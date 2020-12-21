@@ -25,7 +25,7 @@ Browser implementation of the classic Flappy Bird mobile game, with additional c
   created by saving the most recent pipes into an array and deleting ones that the player has passed. Locations are updated and 
   pipes are redrawn with every animation frame, allowing the obstacles to approach smoothly and consistently.
 
-```
+```javascript
     getRandomPipe(x){
         //receives starting x coord, returns new pipe object
         const heightRange = this.dimensions.height - (2 * CONSTANTS.EDGE_BUFFER) - CONSTANTS.GAP_HEIGHT;
@@ -52,7 +52,7 @@ Browser implementation of the classic Flappy Bird mobile game, with additional c
 ### Collision detection
 * Collision detection was implemented with respect to each character's unique hitbox. Dimensions were checked against both the upper and lower pipes.
 
-```
+```javascript
     collidesWith(birdBounds){
         //returns true if bird collides with any pipe, false otherwise
         let hitDetection = false;
