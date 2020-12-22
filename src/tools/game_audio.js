@@ -40,7 +40,6 @@ export default class GameAudio {
         this._addAudioSource(audioElement, defaultAudioSource);        
         
         //set default audio properties        
-        audioElement.autoplay = true;
         audioElement.loop = true;
         audioElement.volume = CONSTANTS.VOL_SLIDER_SETTINGS.value;
         
