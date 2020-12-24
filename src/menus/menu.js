@@ -18,4 +18,9 @@ class Menu {
         });
     }
 
+    addListener(elementClass, callback){
+        //receives an element class name and a callback, adds callback listener to the element
+        const ele = document.querySelector(elementClass);
+        ele.addListener("click", () => callback());
+    }
 }
