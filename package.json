@@ -4,7 +4,7 @@
   "description": "Browser implementation of the classic Flappy Bird mobile game, with additional characters and features.",
   "main": "index.js",
   "dependencies": {
-    "webpack": "^4.44.2",
+    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {},
